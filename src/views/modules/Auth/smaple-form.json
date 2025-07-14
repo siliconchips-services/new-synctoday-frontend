@@ -1,0 +1,130 @@
+[
+  {
+    "name": "username",
+    "label": "Username",
+    "type": "text",
+    "placeholder": "Enter username",
+    "required": true,
+    "regex": "/^[a-zA-Z0-9]{8,20}$/",
+    "validationMessage": "Username must be 8-20 characters long and contain only letters and numbers."
+  },
+  {
+    "name": "password",
+    "label": "Password",
+    "type": "password",
+    "placeholder": "Enter password",
+    "required": true,
+    "regex": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
+    "validationMessage": "Password must be 8-20 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)."
+  },
+  {
+    "name": "bio",
+    "label": "Bio",
+    "type": "textarea",
+    "placeholder": "Enter bio",
+    "rows": 3,
+    "required": true,
+    "validationMessage": "Bio is required."
+  },
+  {
+    "name": "dob",
+    "label": "Date of Birth",
+    "type": "date",
+    "format": "YYYY-MM-DD",
+    "required": true,
+    "disableFuture": true,
+    "validationMessage": "Please select a valid date of birth (past dates only)."
+  },
+  {
+    "name": "startDate",
+    "label": "Start Date",
+    "type": "date",
+    "format": "DD/MM/YYYY",
+    "required": true,
+    "disablePast": true,
+    "validationMessage": "Start date must be today or a future date."
+  },
+  {
+    "name": "pastWeekOnly",
+    "label": "Last 7 Days",
+    "type": "date",
+    "format": "DD/MM/YYYY",
+    "required": true,
+    "pastDaysLimit": 7,
+    "disableFuture": true,
+    "validationMessage": "Please select a date within the past 7 days."
+  },
+  {
+    "name": "pastMonthOnly",
+    "label": "Last 30 Days",
+    "type": "date",
+    "format": "DD/MM/YYYY",
+    "required": true,
+    "pastDaysLimit": 30,
+    "disableFuture": true,
+    "validationMessage": "Please select a date within the past 30 days."
+  },
+  {
+    "name": "pastYearOnly",
+    "label": "Last 1 Year",
+    "type": "date",
+    "format": "DD/MM/YYYY",
+    "required": true,
+    "pastDaysLimit": 365,
+    "disableFuture": true,
+    "validationMessage": "Please select a date within the past year."
+  },
+  {
+    "name": "gender",
+    "label": "Gender",
+    "type": "select",
+    "placeholder": "Select gender",
+    "required": true,
+    "options": [
+      {
+        "label": "Male",
+        "value": "male"
+      },
+      {
+        "label": "Female",
+        "value": "female"
+      },
+      {
+        "label": "Other",
+        "value": "other"
+      }
+    ],
+    "validationMessage": "Please select a gender."
+  },
+  {
+    "name": "days",
+    "label": "Days",
+    "type": "select",
+    "mode": "multiple",
+    "placeholder": "Select days",
+    "required": true,
+    "options": [
+      {
+        "label": "Monday",
+        "value": "Monday"
+      },
+      {
+        "label": "Tuesday",
+        "value": "Tuesday"
+      },
+      {
+        "label": "Wednesday",
+        "value": "Wednesday"
+      },
+      {
+        "label": "Thursday",
+        "value": "Thursday"
+      },
+      {
+        "label": "Other",
+        "value": "othee"
+      }
+    ],
+    "validationMessage": "Please select at least one day"
+  }
+]

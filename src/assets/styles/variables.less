@@ -1,0 +1,46 @@
+@import 'webfonts.less';
+
+@primary-font: ~'var(--primary-font, Poppins)';
+@primary-color: ~'var(--primary-color, #041a5e)';
+@secondary-color: ~'var(--secondary-color, #243dda)';
+// @yts: ~'var(--yts-color, #00a5cf)';
+// @yta: ~'var(--yta-color, #25a18e)';
+// @ipr: ~'var(--ipr-color, #edae49)';
+// @pnd: ~'var(--pnd-color, #ff6b35)';
+
+@liteGrey: #dddddd;
+@darkGrey: #454545;
+@offWhite: #f8f8f8;
+@grey: #666666;
+@white: #ffffff;
+@black: #000000;
+@text: #252525;
+@mainMenuItemBg: #f2f2f2;
+@red: #cc0000;
+@blue: #243dda;
+@green: #046635;
+@error-color: #ff0000;
+@liteBlue: #e3ebf8;
+
+// Section Variables
+@section-padding: 50px;
+@screen-sm: 460px;
+@screen-md: 768px;
+@screen-lg: 992px;
+@screen-xl: 1200px;
+@screen-xxl: 1600px;
+@gutter: 10px;
+
+@box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+@transition5s: all 0.5s ease-in-out;
+@transition3s: all 0.3s ease-in-out;
+
+.themeColorOpacity(@color, @opacity) {
+  @computedColor: rgba(@color, @opacity);
+}
+.colorOpacity(@color, @opacity) {
+  @computedColor: color-mix(in srgb, @color, transparent @opacity);
+}
+.transition5s {
+  transition: all 0.5s ease-in-out;
+}
