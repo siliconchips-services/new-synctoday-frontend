@@ -1,20 +1,20 @@
-import Cookies from 'js-cookie';
+import { getCookie } from './cookie';
 
 export const getTokenForBaseURL = (baseURL: string): string | undefined => {
   let token: string | undefined;
 
   if (baseURL.includes(import.meta.env.VITE_PC_API_LOGS)) {
-    token = Cookies.get('token_logs');
+    token = getCookie('token_logs');
   } else if (baseURL.includes(import.meta.env.VITE_PC_API_APPS)) {
-    token = Cookies.get('token_apps');
+    token = getCookie('token_apps');
   } else if (baseURL.includes(import.meta.env.VITE_PC_API_TENANTS)) {
-    token = Cookies.get('token_tenants');
+    token = getCookie('token_tenants');
   } else if (
     baseURL.includes(import.meta.env.VITE_PLATFORM_IDENTITY_SERVICE_IDs)
   ) {
-    token = Cookies.get('token_user'); // Assuming this is the main token
+    token = getCookie('token_user'); // Assuming this is the main token
   } else if (baseURL.includes(import.meta.env.VITE_PC_API_CORE)) {
-    token = Cookies.get('token_core');
+    token = getCookie('token_core');
   }
   return token;
 };

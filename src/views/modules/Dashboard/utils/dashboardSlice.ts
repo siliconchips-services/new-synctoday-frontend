@@ -26,17 +26,6 @@ const DashboardSlice = createSlice({
 export const { setAppList } = DashboardSlice.actions;
 
 const userToken = getCookie('token');
-const headers = {
-  accept: 'application/json',
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${userToken ?? getCookie('token')}`,
-};
-
-const config: CustomAxiosRequestConfig = {
-  showToast: true,
-  notAddLog: false,
-  headers: headers,
-};
 
 export const fetchAppsList =
   (tenantId: string, userId: string): AppThunk =>
@@ -44,7 +33,15 @@ export const fetchAppsList =
     try {
       const response = await usersApi.get(
         `${API_URL.USERS.APP_LIST}?tenantId=${tenantId}&userId=${userId}`,
-        config,
+        {
+          showToast: true,
+          notAddLog: false,
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+          },
+        } as CustomAxiosRequestConfig,
       );
 
       return response.data?.data;

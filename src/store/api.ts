@@ -16,10 +16,10 @@ const PC_BASE_URLS = {
   users: import.meta.env.VITE_PC_API_USERS,
   tenantidentity: import.meta.env.VITE_PC_API_TENANT_IDENTITY,
   core: import.meta.env.VITE_PC_API_CORE,
-
-  // logs: import.meta.env.VITE_PC_API_LOGS,
-  // apps: import.meta.env.VITE_PC_API_APPS,
-  // tenants: import.meta.env.VITE_PC_API_TENANTS,
+  logs: import.meta.env.VITE_PC_API_LOGS,
+  apps: import.meta.env.VITE_PC_API_APPS,
+  tenants: import.meta.env.VITE_PC_API_TENANTS,
+  platform_identity: import.meta.env.VITE_PC_API_PLATFORM_IDENTITY,
 };
 
 // Generic function to get an Axios instance
@@ -147,11 +147,18 @@ const createApiInstance = (baseURL: string) => {
 const usersApi = createApiInstance(PC_BASE_URLS.users);
 const tenantidentityApi = createApiInstance(PC_BASE_URLS.tenantidentity);
 const coreApi = createApiInstance(PC_BASE_URLS.core);
+const logsApi = createApiInstance(PC_BASE_URLS.logs);
+const appsApi = createApiInstance(PC_BASE_URLS.apps);
+const tenantsApi = createApiInstance(PC_BASE_URLS.tenants);
+const platform_identityApi = createApiInstance(PC_BASE_URLS.platform_identity);
 
 export {
   PC_BASE_URLS,
   usersApi,
   tenantidentityApi,
   coreApi,
-  // logsApi, appsApi, tenantsApi, ,
+  logsApi,
+  appsApi,
+  tenantsApi,
+  platform_identityApi,
 };

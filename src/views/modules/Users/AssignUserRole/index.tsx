@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Drawer, Button, Space, Form } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/store/app';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/store/app';
 import { getAssignUserRole, updateAssignUserRole } from '../utils/usersSlice';
 import { FormBox, InputBox } from '@/components/AntdAddons';
 import PageSpinner from '@/components/PageSpinner/PageSpinner';

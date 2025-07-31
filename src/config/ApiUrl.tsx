@@ -5,6 +5,9 @@ const API_URL = {
     USER_PREFERENCE: `tenantidentity/userpreference`,
     TENANT_APP_SUMMARY: `tenantidentity/tenantappsummary`,
   },
+  PLATFORM_IDENTITY: {
+    APP_LOGIN: `platform/applogin`,
+  },
 
   USERS: {
     ADD: 'tenantidentity/user',
@@ -19,6 +22,8 @@ const API_URL = {
     CHANGE_PASSWORD: 'tenantidentity/users/reset-password',
     GENERATE_PASSWORD: 'tenantidentity/users/generate-password',
     APP_LIST: 'tenantidentity/userapps',
+    USER_ROLE_LIST: 'platform/userroles',
+    USER_ROLE_EDIT: 'platform/userrole',
   },
 
   CORE: {
@@ -43,6 +48,21 @@ const API_URL = {
       DATE_FORMATE: 'dateformats',
       TIME_FORMATE: 'timeformats',
     },
+  },
+  APPS: {
+    LIST: 'applications',
+  },
+  APPS_TYPE: {
+    LIST: 'applicationtypes',
+  },
+  TENANT: {
+    LIST: 'tenants',
+  },
+  LOGS: {
+    ADD: 'log',
+    LIST: 'logs',
+    DELETE: 'logs',
+    EXPORT: 'export/logs',
   },
 };
 

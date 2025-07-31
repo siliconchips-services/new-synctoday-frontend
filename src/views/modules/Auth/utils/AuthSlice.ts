@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import API_URL from '@/config/ApiUrl';
 import { CustomAxiosRequestConfig } from '@/config/InterfacesAndTypes';
 import { AppThunk } from '@/store/app';
-import { tenantidentityApi, usersApi } from '@/store/api';
+import { platform_identityApi, tenantidentityApi, usersApi } from '@/store/api';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { getCookie, setCookie } from '@/utils/cookie';
@@ -166,12 +166,6 @@ export const removeToken = (): void => {
 
 const userToken = getCookie('token');
 
-const headers = {
-  accept: 'application/json',
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${userToken}`,
-};
-
 export const getAppDetails =
   (action: any): AppThunk<any> =>
   async () => {
@@ -221,15 +215,19 @@ export const appLogin =
       const config: CustomAxiosRequestConfig = {
         showToast: false,
         notAddLog: false,
-        headers: headers,
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+        },
       };
       const payload = {
         appId: import.meta.env.VITE_PLATFORM_CONSOLE_IDs,
         secret: import.meta.env.VITE_PLATFORM_CONSOLE_KEY,
         scope: apiID,
       };
-      const response = await usersApi.post(
-        API_URL.AUTH.APP_LOGIN,
+      const response = await platform_identityApi.post(
+        API_URL.PLATFORM_IDENTITY.APP_LOGIN,
         payload,
         config,
       );
@@ -280,16 +278,16 @@ export const getUserPreference =
     }
   };
 
-const config: CustomAxiosRequestConfig = {
-  showToast: true,
-  notAddLog: false,
-  responseType: 'arraybuffer',
-  headers: {
-    accept: 'application/json',
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${userToken}`,
-  },
-};
+// const config: CustomAxiosRequestConfig = {
+//   showToast: true,
+//   notAddLog: false,
+//   responseType: 'arraybuffer',
+//   headers: {
+//     accept: 'application/json',
+//     'Content-Type': 'application/json',
+//     Authorization: `Bearer ${userToken}`,
+//   },
+// };
 export const getUserProfileImage =
   (id: string): AppThunk<any> =>
   async (dispatch) => {
@@ -297,7 +295,16 @@ export const getUserProfileImage =
       const tenantId = getCookie('tenantID');
       const response = await usersApi.get(
         `${API_URL.USERS.USER_PROFILE_IMAGE}?userId=${id}&tenantId=${tenantId}`,
-        config,
+        {
+          showToast: true,
+          notAddLog: false,
+          responseType: 'arraybuffer',
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+          },
+        } as CustomAxiosRequestConfig,
       );
       const returnDetails = response?.data;
       dispatch(setUserImg(returnDetails));

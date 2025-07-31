@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { appLogin } from '@/views/modules/Auth/utils/AuthSlice';
-import Cookies from 'js-cookie';
+
 import { AppDispatch } from '@/store/app';
 import { getTokenNameForBaseURL } from '@/utils/tokenResolver';
+import { setCookie } from '@/utils/cookie';
 
 export const useModuleAccess = (serviceID: string) => {
   const dispatch: AppDispatch = useDispatch();
@@ -17,7 +18,7 @@ export const useModuleAccess = (serviceID: string) => {
       .then((loginResponse: any) => {
         const tokenName = getTokenNameForBaseURL(serviceID);
 
-        Cookies.set(tokenName, loginResponse?.res?.token, {
+        setCookie(tokenName, loginResponse?.res?.token, {
           expires: loginResponse?.expiresDate,
         });
         setAccess(true);

@@ -77,7 +77,7 @@ const formDataConfig: CustomAxiosRequestConfig = {
   headers: {
     accept: 'text/plain',
     'Content-Type': 'multipart/form-data',
-    Authorization: `Bearer ${getCookie('token')}`,
+    Authorization: `Bearer ${userToken ?? getCookie('token')}`,
   },
 };
 
@@ -161,7 +161,15 @@ export const editUserPreference =
       const response = await usersApi.put(
         API_URL.USERS.UPDATE_PREFERENCE,
         action,
-        config,
+        {
+          showToast: true,
+          notAddLog: false,
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+          },
+        } as CustomAxiosRequestConfig,
       );
 
       return response.data;
@@ -191,11 +199,15 @@ export const editNewUser =
   (id: string, action: any): AppThunk<any> =>
   async (dispatch) => {
     try {
-      const response = await usersApi.put(
-        `${API_URL.USERS.EDIT}`,
-        action,
-        formDataConfig,
-      );
+      const response = await usersApi.put(`${API_URL.USERS.EDIT}`, action, {
+        showToast: true,
+        notAddLog: false,
+        headers: {
+          accept: 'text/plain',
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+        },
+      } as CustomAxiosRequestConfig);
       const userId = getCookie('userID');
       dispatch(getUserProfileImage(userId));
       return response.data;
@@ -297,5 +309,41 @@ export const generatePassword = (): AppThunk<any> => async () => {
     throw new Error('Error: ');
   }
 };
+
+// Get Assign User Role
+export const getAssignUserRole =
+  (userID: string): AppThunk<any> =>
+  async (dispatch) => {
+    try {
+      dispatch(setIsLoading(true));
+      const response = await usersApi.get(
+        `${API_URL.USERS.USER_ROLE_LIST}?userid=${userID}`,
+        { headers: headers },
+      );
+      dispatch(setAssignRolesList(response?.data));
+      dispatch(setIsLoading(false));
+      return response.data;
+    } catch (error: any) {
+      console.error('Error: ', error);
+      throw new Error('Error: ');
+    }
+  };
+
+// Edit Assign User Role
+export const updateAssignUserRole =
+  (action: any): AppThunk<any> =>
+  async () => {
+    try {
+      const response = await usersApi.put(
+        API_URL.USERS.USER_ROLE_EDIT,
+        action,
+        config,
+      );
+      return response.data;
+    } catch (error: any) {
+      console.error('Error: ', error);
+      throw new Error('Error: ');
+    }
+  };
 
 export default UsersSlice.reducer;

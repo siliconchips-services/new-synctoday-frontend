@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store/app';
 import { decodeToken, doLogin, getUserPreference } from './utils/AuthSlice';
-import { regexPatterns } from '@/config/validations/validations';
 import path from '@/config/path';
 // import { useModuleAccess } from '@/hooks/useModuleAccess';
 import PageSpinner from '@/components/PageSpinner/PageSpinner';
-import { setCookie } from '@/utils/cookie';
+import { getCookie, setCookie } from '@/utils/cookie';
+import { useModuleAccess } from '@/hooks/useModuleAccess';
 
 const Login: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -17,6 +17,8 @@ const Login: React.FC = () => {
 
   const [fields, setFields] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isToken, setIsToken] = useState<boolean>(false);
+
   // const [isShow, setIsShow] = useState<boolean>(false);
   const tenantID = import.meta.env.VITE_X_TENANT_ID;
 
@@ -36,9 +38,6 @@ const Login: React.FC = () => {
       type: 'password',
       placeholder: 'Enter password',
       required: true,
-      regex: regexPatterns.password, // At least 7 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
-      validationMessage:
-        'Password should contain at least 7 to 15 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character.',
     },
   ];
 
@@ -48,35 +47,35 @@ const Login: React.FC = () => {
     }, 1000);
   });
 
-  // // Call useModuleAccess hooks at the top level
-  // const appModuleAccess = useModuleAccess(
-  //   import.meta.env.VITE_APPLICATION_SERVICE_IDs,
-  // );
-  // const tenantModuleAccess = useModuleAccess(
-  //   import.meta.env.VITE_TENANTS_SERVICE_IDs,
-  // );
-  // const coreModuleAccess = useModuleAccess(
-  //   import.meta.env.VITE_CORE_SERVICE_IDs,
-  // );
-  // const userModuleAccess = useModuleAccess(
-  //   import.meta.env.VITE_PLATFORM_IDENTITY_SERVICE_IDs,
-  // );
+  // Call useModuleAccess hooks at the top level
+  const appModuleAccess = useModuleAccess(
+    import.meta.env.VITE_APPLICATION_SERVICE_IDs,
+  );
+  const tenantModuleAccess = useModuleAccess(
+    import.meta.env.VITE_TENANTS_SERVICE_IDs,
+  );
+  const coreModuleAccess = useModuleAccess(
+    import.meta.env.VITE_CORE_SERVICE_IDs,
+  );
+  const userModuleAccess = useModuleAccess(
+    import.meta.env.VITE_PLATFORM_IDENTITY_SERVICE_IDs,
+  );
 
-  // useEffect(() => {
-  //   const appToken = Cookies.get('token_apps');
-  //   const coreToken = Cookies.get('token_core');
-  //   const tenantToken = Cookies.get('token_tenants');
-  //   const userToken = Cookies.get('token_user');
-  //   if (appToken || coreToken || tenantToken || userToken) {
-  //     setIsToken(true);
-  //   }
-  // }, [
-  //   isToken,
-  //   coreModuleAccess,
-  //   tenantModuleAccess,
-  //   appModuleAccess,
-  //   userModuleAccess,
-  // ]);
+  useEffect(() => {
+    const appToken = getCookie('token_apps');
+    const coreToken = getCookie('token_core');
+    const tenantToken = getCookie('token_tenants');
+    const userToken = getCookie('token_user');
+    if (appToken || coreToken || tenantToken || userToken) {
+      setIsToken(true);
+    }
+  }, [
+    isToken,
+    coreModuleAccess,
+    tenantModuleAccess,
+    appModuleAccess,
+    userModuleAccess,
+  ]);
 
   const onFinish = async (data) => {
     setLoading(true);
