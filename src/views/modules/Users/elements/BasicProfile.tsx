@@ -19,7 +19,6 @@ import { AppDispatch, RootState } from '@/store/app';
 import {
   maxName,
   minName,
-  regexPatterns,
   validations,
 } from '@/config/validations/validations';
 import ImgCrop from 'antd-img-crop';
@@ -31,6 +30,7 @@ import {
   checkEditPermission,
   dataToFormDataConverter,
 } from '@/config/global';
+import { getCookie } from '@/utils/cookie';
 
 interface BasicProfileProps {
   userData?: any;
@@ -50,7 +50,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
     userID,
     isAdd,
     isProfile,
-    handleAddUser,
+    // handleAddUser,
     handleEditUser,
     btnLoading,
   } = props;
@@ -93,7 +93,9 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
   }, [userImg]);
 
   const handleFinish = (data: any) => {
+    const tenantID = getCookie('tenantID');
     const payload = {
+      TenantId: tenantID,
       UserId: data?.userId ?? '',
       EmailId: data?.emailId ?? '',
       // Password: data?.password ?? '',
@@ -109,11 +111,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
     const formDataPayload = dataToFormDataConverter(payload);
 
     if (formDataPayload) {
-      if (isAdd) {
-        handleAddUser(formDataPayload);
-      } else {
-        handleEditUser(data?.userId, formDataPayload);
-      }
+      handleEditUser(data?.userId, formDataPayload);
     }
   };
 
@@ -321,7 +319,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
                   onChange={handleChange}
                   autoComplete="off"
                   aria-autocomplete="none"
-                  disabled={isProfile ? true : !isAdd ? true : false}
+                  disabled={true}
                 />
               </Col>
               <Col xs={24} md={12}>
@@ -334,6 +332,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
                   ]}
                   // disabled={isProfile ? true : false}
                   onChange={handleChange}
+                  disabled={true}
                 />
               </Col>
               {isAdd ? (
@@ -349,43 +348,11 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
                     ]}
                     // disabled={isProfile ? true : false}
                     onChange={handleChange}
+                    disabled={true}
                   />
                 </Col>
               ) : null}
-              {isAdd ? (
-                <Col xs={24} md={12}>
-                  <InputBox.Password
-                    name="confirmPassword"
-                    label="Confirm Password"
-                    placeholder={'Enter Password Again'}
-                    onChange={handleChange}
-                    // disabled={isProfile ? true : false}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please confirm your password',
-                      },
-                      {
-                        pattern: regexPatterns.whitespace,
-                        message: 'Whitespace is not allowed.',
-                      },
-                      {
-                        validator: (_, value) => {
-                          if (
-                            value &&
-                            form.getFieldValue('password') !== value
-                          ) {
-                            return Promise.reject(
-                              new Error('Passwords do not match'),
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  />
-                </Col>
-              ) : null}
+
               <Col xs={24} md={12}>
                 <InputBox.Text
                   name="firstName"
@@ -398,6 +365,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
                   ]}
                   onChange={handleChange}
                   // disabled={isProfile ? true : false}
+                  disabled={true}
                 />
               </Col>
               <Col xs={24} md={12}>
@@ -411,6 +379,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
                   ]}
                   onChange={handleChange}
                   // disabled={isProfile ? true : false}
+                  disabled={true}
                 />
               </Col>
 
@@ -421,7 +390,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
                     label="Active"
                     valuePropName="checked"
                   >
-                    <Switch />
+                    <Switch disabled={true} />
                   </Form.Item>
                 </Col>
               ) : null}

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Layout } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
-import SidebarView from './SidebarView';
+// import SidebarView from './SidebarView';
 import HeaderView from './HeaderView';
 import path from '@/config/path';
 import FooterView from './FooterView';
@@ -11,7 +11,7 @@ import { getCookie } from '@/utils/cookie';
 
 const MainLayout: React.FC = () => {
   const navigate = useNavigate();
-  const [collapsed, SetCollapsed] = useState<boolean>(false);
+  // const [collapsed, SetCollapsed] = useState<boolean>(false);
 
   const json = getCookie('userPreference') || '';
   const userID = getCookie('userID') || '';
@@ -42,11 +42,11 @@ const MainLayout: React.FC = () => {
 
   return (
     <Layout className={`mainPageWrapper has_appSidebar`}>
-      <SidebarView collapsed={collapsed} SetCollapsed={SetCollapsed} />
+      {/* <SidebarView collapsed={collapsed} SetCollapsed={SetCollapsed} /> */}
       <Layout className={`site-layout`}>
         <HeaderView
-          collapsed={collapsed}
-          SetCollapsed={SetCollapsed}
+          // collapsed={collapsed}
+          // SetCollapsed={SetCollapsed}
           userId={userId}
         />
         <Layout.Content className={`appContent`}>

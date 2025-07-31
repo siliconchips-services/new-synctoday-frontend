@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import API_URL from '@/config/ApiUrl';
 import { CustomAxiosRequestConfig } from '@/config/InterfacesAndTypes';
 import { AppThunk } from '@/store/app';
-import { usersApi } from '@/store/api';
+import { tenantidentityApi, usersApi } from '@/store/api';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { getCookie, setCookie } from '@/utils/cookie';
@@ -19,10 +19,12 @@ interface AuthState {
   userImg: ArrayBuffer | null;
 }
 interface DecodedToken {
+  TenantId: string;
   UserId: string;
   UserFirstName: string;
   UserLastName: string;
   UserEmailId: string;
+  Scope: string;
   Role: string;
   sub: string;
   exp: number;
@@ -118,7 +120,7 @@ export const saveToken =
       });
       setCookie('userID', decoded?.UserId, { expires: expiresDate });
       setCookie('tenantID', decoded?.TenantId, { expires: expiresDate });
-      getUserPreference(decoded?.UserId, userToken);
+      getUserPreference(decoded?.UserId, decoded?.TenantId, userToken);
       setCookie(
         'userFullName',
         `${decoded?.UserFirstName || ''} ${decoded?.UserLastName || ''}`,
@@ -150,27 +152,46 @@ export const decodeToken = (tokenKey?: string): DecodedToken | null => {
     return null;
   }
 };
-const COOKIE_PREFIX =
-  import.meta.env.VITE_COOKIES_PREFIX?.replace(/"/g, '') || '';
+// const COOKIE_PREFIX =
+//   import.meta.env.VITE_COOKIES_PREFIX?.replace(/"/g, '') || '';
 
 export const removeToken = (): void => {
   const allCookies = Cookies.get();
 
   Object.keys(allCookies).forEach((cookieName) => {
-    if (cookieName.startsWith(COOKIE_PREFIX)) {
-      Cookies.remove(cookieName);
-    }
+    Cookies.remove(cookieName);
   });
   localStorage.clear();
 };
 
-const userToken = getCookie('token_user');
+const userToken = getCookie('token');
 
 const headers = {
   accept: 'application/json',
   'Content-Type': 'application/json',
   Authorization: `Bearer ${userToken}`,
 };
+
+export const getAppDetails =
+  (action: any): AppThunk<any> =>
+  async () => {
+    try {
+      const config: CustomAxiosRequestConfig = {
+        showToast: false,
+        notAddLog: false,
+      };
+      const response = await tenantidentityApi.post(
+        API_URL.AUTH.TENANT_APP_SUMMARY,
+        action,
+        config,
+      );
+
+      return response;
+    } catch (error: any) {
+      console.error('Error: ', error);
+      throw new Error('Error: ');
+    }
+  };
 
 export const doLogin =
   (action: any): AppThunk<any> =>
@@ -228,11 +249,11 @@ export const appLogin =
   };
 
 export const getUserPreference =
-  (id: string, token: string): AppThunk<any> =>
+  (id: string, tenantID: string, token: string): AppThunk<any> =>
   async (dispatch) => {
     try {
       const response = await usersApi.get(
-        `${API_URL.AUTH.USER_PREFERENCE}?userId=${id}`,
+        `${API_URL.AUTH.USER_PREFERENCE}?userId=${id}&tenantId=${tenantID}`,
         {
           headers: {
             accept: 'application/json',
@@ -259,21 +280,24 @@ export const getUserPreference =
     }
   };
 
+const config: CustomAxiosRequestConfig = {
+  showToast: true,
+  notAddLog: false,
+  responseType: 'arraybuffer',
+  headers: {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  },
+};
 export const getUserProfileImage =
   (id: string): AppThunk<any> =>
   async (dispatch) => {
     try {
-      const userToken = getCookie('token_user');
+      const tenantId = getCookie('tenantID');
       const response = await usersApi.get(
-        `${API_URL.USERS.USER_PROFILE_IMAGE}?userId=${id}`,
-        {
-          responseType: 'arraybuffer',
-          headers: {
-            accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userToken}`,
-          },
-        },
+        `${API_URL.USERS.USER_PROFILE_IMAGE}?userId=${id}&tenantId=${tenantId}`,
+        config,
       );
       const returnDetails = response?.data;
       dispatch(setUserImg(returnDetails));

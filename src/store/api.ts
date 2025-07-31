@@ -14,10 +14,12 @@ interface CustomAxiosConfig extends AxiosRequestConfig {
 // Multiple base URLs
 const PC_BASE_URLS = {
   users: import.meta.env.VITE_PC_API_USERS,
+  tenantidentity: import.meta.env.VITE_PC_API_TENANT_IDENTITY,
+  core: import.meta.env.VITE_PC_API_CORE,
+
   // logs: import.meta.env.VITE_PC_API_LOGS,
   // apps: import.meta.env.VITE_PC_API_APPS,
   // tenants: import.meta.env.VITE_PC_API_TENANTS,
-  // core: import.meta.env.VITE_PC_API_CORE,
 };
 
 // Generic function to get an Axios instance
@@ -143,13 +145,13 @@ const createApiInstance = (baseURL: string) => {
 
 // Export instances
 const usersApi = createApiInstance(PC_BASE_URLS.users);
-// const logsApi = createApiInstance(PC_BASE_URLS.logs);
-// const appsApi = createApiInstance(PC_BASE_URLS.apps);
-// const tenantsApi = createApiInstance(PC_BASE_URLS.tenants);
-// const coreApi = createApiInstance(PC_BASE_URLS.core);
+const tenantidentityApi = createApiInstance(PC_BASE_URLS.tenantidentity);
+const coreApi = createApiInstance(PC_BASE_URLS.core);
 
 export {
   PC_BASE_URLS,
   usersApi,
-  // logsApi, appsApi, tenantsApi, , coreApi
+  tenantidentityApi,
+  coreApi,
+  // logsApi, appsApi, tenantsApi, ,
 };

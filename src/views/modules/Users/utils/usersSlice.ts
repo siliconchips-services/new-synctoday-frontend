@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { usersApi } from '@/store/api';
+import { coreApi, usersApi } from '@/store/api';
 import API_URL from '@/config/ApiUrl';
 import { AppThunk } from '@/store/app';
 import { CustomAxiosRequestConfig } from '@/config/InterfacesAndTypes';
@@ -54,16 +54,21 @@ const expiresTime = import.meta.env.VITE_COOKIES_EXP || 12;
 const expiresInMs = expiresTime * 60 * 60 * 1000;
 const expiresDate = new Date(Date.now() + expiresInMs);
 
+const userToken = getCookie('token');
 const headers = {
   accept: 'application/json',
   'Content-Type': 'application/json',
-  Authorization: `Bearer ${getCookie('token')}`,
+  Authorization: `Bearer ${userToken ?? getCookie('token')}`,
 };
 
 const config: CustomAxiosRequestConfig = {
   showToast: true,
   notAddLog: false,
-  headers: headers,
+  headers: {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+  },
 };
 
 const formDataConfig: CustomAxiosRequestConfig = {
@@ -81,7 +86,11 @@ export const getUsersList =
   async (dispatch) => {
     try {
       const response = await usersApi.post(API_URL.USERS.LIST, action, {
-        headers: headers,
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+        },
       });
       dispatch(setUsersList(response?.data));
       return response.data;
@@ -98,7 +107,11 @@ export const getUserDetails =
       const response = await usersApi.get(
         `${API_URL.USERS.DETAILS}?userId=${action}`,
         {
-          headers: headers,
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+          },
         },
       );
       dispatch(getUserProfileImage(action));
@@ -110,12 +123,18 @@ export const getUserDetails =
   };
 
 export const getUserPreference =
-  (id: string): AppThunk<any> =>
+  (userId: string, tenantId: string): AppThunk<any> =>
   async (dispatch) => {
     try {
       const response = await usersApi.get(
-        `${API_URL.AUTH.USER_PREFERENCE}?userId=${id}`,
-        { headers: headers },
+        `${API_URL.AUTH.USER_PREFERENCE}?userId=${userId}&tenantId=${tenantId}`,
+        {
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken ?? getCookie('token')}`,
+          },
+        },
       );
 
       const themeCode = response?.data?.data?.themeCode;
@@ -127,7 +146,7 @@ export const getUserPreference =
         },
         expiresDate: expiresDate,
       };
-      dispatch(getUserProfileImage(id));
+      dispatch(getUserProfileImage(userId));
       return returnDetails;
     } catch (error: any) {
       console.error('Error: ', error);
@@ -173,7 +192,7 @@ export const editNewUser =
   async (dispatch) => {
     try {
       const response = await usersApi.put(
-        `${API_URL.USERS.EDIT}/${id}`,
+        `${API_URL.USERS.EDIT}`,
         action,
         formDataConfig,
       );
@@ -186,65 +205,65 @@ export const editNewUser =
     }
   };
 
-// export const getLanguageDD = (): AppThunk<any> => async () => {
-//   try {
-//     const response = await coreApi.get(API_URL.CORE.LANGUAGES.DD_LIST, {
-//       headers: headers,
-//     });
-//     return response.data;
-//   } catch (error: any) {
-//     console.error('Error: ', error);
-//     throw new Error('Error: ');
-//   }
-// };
-// export const getTimeZoneDD = (): AppThunk<any> => async () => {
-//   try {
-//     const response = await coreApi.get(API_URL.CORE.TIMEZONES.LIST, {
-//       headers: headers,
-//     });
-//     const configJson = response?.data?.data?.configJson
-//       ? JSON.parse(response?.data?.data?.configJson)
-//       : null;
-//     return configJson;
-//   } catch (error: any) {
-//     console.error('Error: ', error);
-//     throw new Error('Error: ');
-//   }
-// };
-// export const getDateFormatsDD =
-//   (action: string): AppThunk<any> =>
-//   async () => {
-//     try {
-//       const response = await coreApi.get(
-//         `${API_URL.CORE.TIMEZONES.DATE_FORMATE}?timeZoneCode=${action}`,
-//         {
-//           headers: headers,
-//         },
-//       );
+export const getLanguageDD = (): AppThunk<any> => async () => {
+  try {
+    const response = await coreApi.get(API_URL.CORE.LANGUAGES.DD_LIST, {
+      headers: headers,
+    });
+    return response.data;
+  } catch (error: any) {
+    console.error('Error: ', error);
+    throw new Error('Error: ');
+  }
+};
+export const getTimeZoneDD = (): AppThunk<any> => async () => {
+  try {
+    const response = await coreApi.get(API_URL.CORE.TIMEZONES.LIST, {
+      headers: headers,
+    });
+    const configJson = response?.data?.data?.configJson
+      ? JSON.parse(response?.data?.data?.configJson)
+      : null;
+    return configJson;
+  } catch (error: any) {
+    console.error('Error: ', error);
+    throw new Error('Error: ');
+  }
+};
+export const getDateFormatsDD =
+  (action: string): AppThunk<any> =>
+  async () => {
+    try {
+      const response = await coreApi.get(
+        `${API_URL.CORE.TIMEZONES.DATE_FORMATE}?timeZoneCode=${action}`,
+        {
+          headers: headers,
+        },
+      );
 
-//       return response?.data;
-//     } catch (error: any) {
-//       console.error('Error: ', error);
-//       throw new Error('Error: ');
-//     }
-//   };
-// export const getTimeFormatsDD =
-//   (action: string): AppThunk<any> =>
-//   async () => {
-//     try {
-//       const response = await coreApi.get(
-//         `${API_URL.CORE.TIMEZONES.TIME_FORMATE}?timeZoneCode=${action}`,
-//         {
-//           headers: headers,
-//         },
-//       );
+      return response?.data;
+    } catch (error: any) {
+      console.error('Error: ', error);
+      throw new Error('Error: ');
+    }
+  };
+export const getTimeFormatsDD =
+  (action: string): AppThunk<any> =>
+  async () => {
+    try {
+      const response = await coreApi.get(
+        `${API_URL.CORE.TIMEZONES.TIME_FORMATE}?timeZoneCode=${action}`,
+        {
+          headers: headers,
+        },
+      );
 
-//       return response?.data;
-//     } catch (error: any) {
-//       console.error('Error: ', error);
-//       throw new Error('Error: ');
-//     }
-//   };
+      return response?.data;
+    } catch (error: any) {
+      console.error('Error: ', error);
+      throw new Error('Error: ');
+    }
+  };
 
 export const changeUserPassword =
   (action: any): AppThunk<any> =>

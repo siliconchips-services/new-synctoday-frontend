@@ -3,11 +3,12 @@ const API_URL = {
     LOGIN: `tenantidentity/userlogin`,
     APP_LOGIN: `tenantidentity/userapplogin`,
     USER_PREFERENCE: `tenantidentity/userpreference`,
+    TENANT_APP_SUMMARY: `tenantidentity/tenantappsummary`,
   },
 
   USERS: {
     ADD: 'tenantidentity/user',
-    EDIT: 'tenantidentity/user',
+    EDIT: 'tenantidentity/user/me',
     LIST: 'tenantidentity/users',
     DETAILS: 'tenantidentity/user/summary',
     USER_PROFILE_IMAGE: `tenantidentity/user/profile-image`,
@@ -17,6 +18,31 @@ const API_URL = {
 
     CHANGE_PASSWORD: 'tenantidentity/users/reset-password',
     GENERATE_PASSWORD: 'tenantidentity/users/generate-password',
+    APP_LIST: 'tenantidentity/userapps',
+  },
+
+  CORE: {
+    LOCATIONS: {
+      LIST: 'countrystatecity',
+      ADD: 'countrystatecity',
+      EDIT: 'countrystatecity',
+      COUNTRIES: 'countries',
+      STATES: 'states',
+      CITIES: 'cities',
+    },
+    LANGUAGES: {
+      LIST: 'language/detail',
+      ADD: 'language',
+      EDIT: 'language',
+      DD_LIST: 'language/summary',
+    },
+    TIMEZONES: {
+      LIST: 'timezone',
+      ADD: 'timezone',
+      EDIT: 'timezone',
+      DATE_FORMATE: 'dateformats',
+      TIME_FORMATE: 'timeformats',
+    },
   },
 };
 

@@ -1,19 +1,12 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import AuthSlice from '@/views/modules/Auth/utils/AuthSlice';
-
-// import appsDropdownSlice from './dropdowns/appsDropdownSlice';
-// import tenantsDropdownSlice from './dropdowns/tenantsDropdownSlice';
-// import usersDropdownSlice from './dropdowns/usersDropdownSlice';
+import DashboardSlice from '@/views/modules/Dashboard/utils/dashboardSlice';
 import UsersSlice from '@/views/modules/Users/utils/usersSlice';
 
 export const store = configureStore({
   reducer: {
     AUTH: AuthSlice,
-
-    // APPS_DROPDOWN: appsDropdownSlice,
-    // TENANTS_DROPDOWN: tenantsDropdownSlice,
-    // USERS_DROPDOWN: usersDropdownSlice,
-
+    DASHBOARD: DashboardSlice,
     USERS: UsersSlice,
   },
   middleware: (getDefaultMiddleware) =>

@@ -7,10 +7,10 @@ import { validations } from '@/config/validations/validations';
 import { ColorPickerProps, GetProp } from 'antd/lib';
 import {
   editUserPreference,
-  // getDateFormatsDD,
-  // getLanguageDD,
-  // getTimeFormatsDD,
-  // getTimeZoneDD,
+  getDateFormatsDD,
+  getLanguageDD,
+  getTimeFormatsDD,
+  getTimeZoneDD,
   getUserPreference,
 } from '../utils/usersSlice';
 import Cookies from 'js-cookie';
@@ -18,6 +18,7 @@ import { selectOptions } from '../utils/selectOptions';
 import { DEFAULT_THEME } from '@/config/Constant';
 import { useFetchTheme } from '@/hooks/useFetchTheme';
 import { checkEditPermission } from '@/config/global';
+import { getCookie } from '@/utils/cookie';
 
 interface UserPreferenceProps {
   activeTab?: string;
@@ -81,7 +82,8 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
         const pref = json ? JSON.parse(json) : {};
         applyPreference(pref);
       } else if (isEdit && userID) {
-        await dispatch(getUserPreference(userID))
+        const tenantID = getCookie('tenantID');
+        await dispatch(getUserPreference(userID, tenantID))
           .then((returnDetails: any) => {
             const pref = returnDetails?.res || {};
             applyPreference(pref);
@@ -132,45 +134,45 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
       'secondary-color': sc,
     });
 
-    // if (pref.timezoneCode) handleDateTimeList(pref.timezoneCode);
+    if (pref.timezoneCode) handleDateTimeList(pref.timezoneCode);
   };
 
-  // const handleLanguageList = async () => {
-  //   setLanguageLoading(true);
-  //   await dispatch(getLanguageDD())
-  //     .then((res) => setLanguagesDD(res?.data?.languages || []))
-  //     .catch(console.warn)
-  //     .finally(() => setLanguageLoading(false));
-  // };
+  const handleLanguageList = async () => {
+    setLanguageLoading(true);
+    await dispatch(getLanguageDD())
+      .then((res) => setLanguagesDD(res?.data?.languages || []))
+      .catch(console.warn)
+      .finally(() => setLanguageLoading(false));
+  };
 
-  // const handleTimeZoneList = async () => {
-  //   setTimezoneLoading(true);
-  //   await dispatch(getTimeZoneDD())
-  //     .then((res) => setTimeZoneDD(res?.timezones || []))
-  //     .catch(console.warn)
-  //     .finally(() => setTimezoneLoading(false));
-  // };
+  const handleTimeZoneList = async () => {
+    setTimezoneLoading(true);
+    await dispatch(getTimeZoneDD())
+      .then((res) => setTimeZoneDD(res?.timezones || []))
+      .catch(console.warn)
+      .finally(() => setTimezoneLoading(false));
+  };
 
-  // const handleDateTimeList = async (tz: string) => {
-  //   setDateFormatLoading(true);
-  //   setTimeFormatLoading(true);
+  const handleDateTimeList = async (tz: string) => {
+    setDateFormatLoading(true);
+    setTimeFormatLoading(true);
 
-  //   await dispatch(getDateFormatsDD(tz))
-  //     .then((res) => setDateFormatDD(res?.data || []))
-  //     .catch(console.warn)
-  //     .finally(() => setDateFormatLoading(false));
+    await dispatch(getDateFormatsDD(tz))
+      .then((res) => setDateFormatDD(res?.data || []))
+      .catch(console.warn)
+      .finally(() => setDateFormatLoading(false));
 
-  //   await dispatch(getTimeFormatsDD(tz))
-  //     .then((res) => setTimeFormatDD(res?.data || []))
-  //     .catch(console.warn)
-  //     .finally(() => setTimeFormatLoading(false));
-  // };
+    await dispatch(getTimeFormatsDD(tz))
+      .then((res) => setTimeFormatDD(res?.data || []))
+      .catch(console.warn)
+      .finally(() => setTimeFormatLoading(false));
+  };
 
   useEffect(() => {
     if (activeTab === 'userPreference') {
       loadUserPreference();
-      // handleLanguageList();
-      // handleTimeZoneList();
+      handleLanguageList();
+      handleTimeZoneList();
     }
   }, [activeTab, isProfile, isEdit, userID]);
 
@@ -199,8 +201,10 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
       'secondary-color': hexStringSecondary,
     };
     const themeCodeString = JSON.stringify(themeInput);
+    const tenantID = getCookie('tenantID');
 
     const payload = {
+      tenantId: tenantID,
       userId: userID,
       languageCode: data?.languageCode,
       timezoneCode: data?.timezoneCode,
@@ -215,7 +219,8 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
       .then((res: any) => {
         if (isProfile) {
           setLoadTheme(true);
-          dispatch(getUserPreference(res?.data?.userId))
+          const tenantID = getCookie('tenantID');
+          dispatch(getUserPreference(res?.data?.userId, tenantID))
             .then((returnDetails: any) => {
               Cookies.remove('userPreference');
               Cookies.set(
@@ -278,7 +283,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               showSearch
               onChange={handleChange}
               notFoundContent={languagesDD?.length === 0 ? <Spin /> : null}
-              // onFocus={() => languagesDD?.length === 0 && handleLanguageList()}
+              onFocus={() => languagesDD?.length === 0 && handleLanguageList()}
               options={{ list: languagesDD, valueKey: 'code', textKey: 'name' }}
               rules={[validations.required.select()]}
             />
@@ -293,10 +298,10 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               showSearch
               onChange={(val: string) => {
                 handleChange();
-                // handleDateTimeList(val);
+                handleDateTimeList(val);
               }}
               notFoundContent={timeZoneDD?.length === 0 ? <Spin /> : null}
-              // onFocus={() => timeZoneDD?.length === 0 && handleTimeZoneList()}
+              onFocus={() => timeZoneDD?.length === 0 && handleTimeZoneList()}
               options={{ list: timeZoneDD, valueKey: 'code', textKey: 'name' }}
               rules={[validations.required.select()]}
             />

@@ -13,6 +13,7 @@ function App() {
 
   const json = getCookie('userPreference');
   const pref = json ? JSON.parse(json) : {};
+
   const pf = pref?.themeCode?.['primary-font'] ?? DEFAULT_THEME.PRIMARY_FONT;
   const pc = pref?.themeCode?.['primary-color'] ?? DEFAULT_THEME.PRIMARY_COLOR;
   const sc =

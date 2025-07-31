@@ -1,17 +1,23 @@
+import React from 'react';
 import PageHeader from '@/components/PageHeader';
 import { DashboardOverview } from '@/config/BreadcrumbConfig';
-import { Card } from 'antd';
-import React from 'react';
+import { Card, Col, Row } from 'antd';
+import AppList from './components/AppList';
+import HolidayViewer from './components/HolidayViewer';
 
 const Dashboard: React.FC = () => {
   return (
     <>
-      <PageHeader
-        // breadcrumbs={DashboardOverview}
-        title={DashboardOverview.title}
-      />
+      <PageHeader title={DashboardOverview.title} />
       <Card className="mainContent box">
-        <p>Dashboard content comes here...</p>
+        <Row gutter={[30, 30]}>
+          <Col xs={24} md={12} lg={18}>
+            <AppList />
+          </Col>
+          <Col xs={24} md={12} lg={6}>
+            <HolidayViewer />
+          </Col>
+        </Row>
       </Card>
     </>
   );

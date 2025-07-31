@@ -4,13 +4,13 @@ import { UserProfileBreadcrumb } from '@/config/BreadcrumbConfig';
 import { Card, message } from 'antd';
 import UserProfileForm from '../elements/UserProfileForm';
 import PageSpinner from '@/components/PageSpinner/PageSpinner';
-import Cookies from 'js-cookie';
 import { AppDispatch } from '@/store/app';
 import { useDispatch } from 'react-redux';
 import { editNewUser, getUserPreference } from '../utils/usersSlice';
 import { decodeToken } from '../../Auth/utils/AuthSlice';
 import { useNavigate } from 'react-router-dom';
 import RestrictedAccessPage from '@/views/errors/RestrictedAccessPage';
+import { getCookie, setCookie } from '@/utils/cookie';
 
 const UserProfile: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -21,21 +21,20 @@ const UserProfile: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const getUserDetails = async () => {
-    const token = Cookies.get('token');
+    const token = getCookie('token');
     const getUserDetails = decodeToken(token);
+
     setLoading(true);
-    dispatch(getUserPreference(getUserDetails?.UserId))
+    dispatch(
+      getUserPreference(getUserDetails?.UserId, getUserDetails?.TenantId),
+    )
       .then((returnDetails: any) => {
         // returnDetails?.res &&
-        Cookies.set(
-          'userPreference',
-          JSON.stringify(returnDetails?.res || {}),
-          {
-            expires: returnDetails?.expiresDate,
-          },
-        );
+        setCookie('userPreference', JSON.stringify(returnDetails?.res || {}), {
+          expires: returnDetails?.expiresDate,
+        });
         setUserID(getUserDetails?.UserId);
-        const userData = Cookies.get('userDetails');
+        const userData = getCookie('userDetails');
         const userDataParsed = userData && JSON.parse(userData);
         if (userDataParsed) {
           setUserDetails(userDataParsed);
@@ -49,11 +48,6 @@ const UserProfile: React.FC = () => {
       });
   };
   useEffect(() => {
-    // const getUserID = Cookies.get('userID');
-    // const getUserDetails = Cookies.get('userDetails');
-    // const userData = getUserDetails && JSON.parse(getUserDetails);
-    // setUserID(getUserID);
-    // setUserDetails(userData);
     getUserDetails();
   }, [navigate]);
 

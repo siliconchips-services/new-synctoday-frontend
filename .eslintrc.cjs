@@ -19,5 +19,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
     "prettier/prettier": ["error"],
+    "no-console": "off",
+    "no-restricted-globals": "off"
   },
 };

@@ -1,0 +1,100 @@
+[
+    {
+        "sr": 1,
+        "date": "1st January",
+        "day": "Wednesday",
+        "occasion": "New year",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 2,
+        "date": "14th January",
+        "day": "Tuesday",
+        "occasion": "Pongal",
+        "location": "Chennai"
+    },
+    {
+        "sr": 3,
+        "date": "26th January",
+        "day": "Sunday",
+        "occasion": "Republic day",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 4,
+        "date": "14th March",
+        "day": "Friday",
+        "occasion": "Holi",
+        "location": "Mumbai"
+    },
+    {
+        "sr": 5,
+        "date": "31st March",
+        "day": "Monday",
+        "occasion": "Ramzan Id (Id-Ul-Fitar)",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 6,
+        "date": "18th April",
+        "day": "Friday",
+        "occasion": "Good Friday",
+        "location": "Chennai"
+    },
+    {
+        "sr": 7,
+        "date": "1st May",
+        "day": "Thursday",
+        "occasion": "May Day",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 8,
+        "date": "15th August",
+        "day": "Friday",
+        "occasion": "Independence Day",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 9,
+        "date": "27th August",
+        "day": "Wednesday",
+        "occasion": "Ganesh Chaturthi",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 10,
+        "date": "2nd October",
+        "day": "Thursday",
+        "occasion": "Gandhi Jayanti / Dusshera",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 11,
+        "date": "20th October",
+        "day": "Monday",
+        "occasion": "Diwali",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 12,
+        "date": "23rd October",
+        "day": "Thursday",
+        "occasion": "Bhai Dooj",
+        "location": "Mumbai"
+    },
+    {
+        "sr": 13,
+        "date": "24th December",
+        "day": "Wednesday",
+        "occasion": "Christmas Eve",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "sr": 14,
+        "date": "25th December",
+        "day": "Thursday",
+        "occasion": "Christmas day",
+        "location": "Mumbai / Chennai"
+    }
+]

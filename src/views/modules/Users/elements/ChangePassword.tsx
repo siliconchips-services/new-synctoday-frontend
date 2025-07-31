@@ -6,6 +6,7 @@ import { AppDispatch } from '@/store/app';
 import { regexPatterns, validations } from '@/config/validations/validations';
 import { changeUserPassword } from '../utils/usersSlice';
 import { checkPermission } from '@/config/global';
+import { getCookie } from '@/utils/cookie';
 
 interface ChangePasswordProps {
   userID?: string | any;
@@ -27,7 +28,9 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
   };
   const handleFinish = async (data: any) => {
     setSaving(true);
+    const tenantID = getCookie('tenantID');
     const payload = {
+      tenantId: tenantID,
       userId: userID,
       password: data?.password,
     };

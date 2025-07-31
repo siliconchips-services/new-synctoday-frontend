@@ -17,7 +17,7 @@ const Login: React.FC = () => {
 
   const [fields, setFields] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  // const [isToken, setIsToken] = useState<boolean>(false);
+  // const [isShow, setIsShow] = useState<boolean>(false);
   const tenantID = import.meta.env.VITE_X_TENANT_ID;
 
   const formInputs = [
@@ -88,13 +88,11 @@ const Login: React.FC = () => {
       };
       await dispatch(doLogin(payload))
         .then((res: any) => {
-          console.log('token', res?.data);
-
           const token = res?.data?.token;
           if (token) {
             const userDetails = decodeToken(token);
 
-            dispatch(getUserPreference(userDetails?.UserId, token))
+            dispatch(getUserPreference(userDetails?.UserId, tenantID, token))
               .then((returnDetails: any) => {
                 // returnDetails?.res &&
                 setCookie(

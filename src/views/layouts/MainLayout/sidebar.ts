@@ -6,12 +6,6 @@ const sidebarMenu = [
     path: path.dashboard,
     label: 'Dashboard',
   },
-
-  {
-    key: 'users',
-    label: 'Users',
-    path: path.users.list,
-  },
 ];
 
 export default sidebarMenu;
