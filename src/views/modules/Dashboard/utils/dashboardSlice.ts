@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { usersApi } from '@/store/api';
+import { tenantidentityApi, usersApi } from '@/store/api';
 import API_URL from '@/config/ApiUrl';
 import { AppThunk } from '@/store/app';
 import { CustomAxiosRequestConfig } from '@/config/InterfacesAndTypes';
@@ -47,6 +47,31 @@ export const fetchAppsList =
       return response.data?.data;
     } catch (error) {
       console.error('Failed to fetch app list:', error);
+    }
+  };
+
+export const appLogin =
+  (apiID: string, tenantID: string, userToken: string): AppThunk<any> =>
+  async () => {
+    try {
+      const response = await tenantidentityApi.post(
+        `${API_URL.AUTH.APP_LOGIN}?token=${userToken}`,
+        {
+          showToast: false,
+          notAddLog: false,
+          headers: {
+            accept: '*/*',
+            'Content-Type': 'sendToken',
+            'x-tenant-id': tenantID,
+            'x-app-id': apiID,
+          },
+        } as CustomAxiosRequestConfig,
+      );
+
+      return response?.data;
+    } catch (error: any) {
+      console.error('Error: ', error);
+      throw new Error('Error: ');
     }
   };
 

@@ -617,3 +617,19 @@ export const trimIdNumber = (value: string, count?: number) => {
     </Tooltip>
   );
 };
+
+export function parseDomainParts(url: string) {
+  const { hostname } = new URL(url);
+  const parts = hostname.split('.'); // ["publishingsuite","platform","siliconchips-syncapps","com"]
+
+  if (parts.length < 2) {
+    return { subSubDomain: null, subDomain: null, domain: hostname };
+  }
+
+  const domain = parts.slice(-2).join('.'); // "syncapps.com" or "siliconchips-syncapps.com" depending on rule
+  const subDomain = parts.length > 2 ? parts[parts.length - 3] : null;
+  const subSubDomain =
+    parts.length > 3 ? parts.slice(0, parts.length - 3).join('.') : null;
+
+  return { subSubDomain, subDomain, domain };
+}

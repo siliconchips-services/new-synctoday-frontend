@@ -604,24 +604,70 @@ ul.bullet {
   li {
     width: 100%;
     max-width: 200px;
-    margin: 10px 0 0;
-    padding: 0 0 10px;
+    margin: 10px;
+    padding: 20px 10px;
     font-size: 1.4rem;
     display: block;
     text-align: center;
+    .colorOpacity(@secondary-color, 75%);
+    border: 1px solid @computedColor;
+    border-radius: 10px;
+
+    &:hover,
+    &:focus,
+    &:focus-within {
+      .colorOpacity(@secondary-color,95%);
+      background-color: @computedColor;
+      box-shadow: @box-shadow;
+    }
+
     img {
       display: inline-block;
-      margin: 10px 0;
+      margin: 0 0 10px;
       text-align: center;
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
     }
     strong {
       font-size: 1.4rem;
       font-weight: bold;
       line-height: 1.5;
       color: @secondary-color;
-      display: block;
-      margin: 0;
+      margin: 0 auto;
       padding: 0;
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+
+    @media (max-width: @screen-lg) {
+      max-width: unset;
+      width: 46%;
+      margin: 2%;
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      strong {
+        font-size: 1.4rem;
+        width: 90%;
+      }
+    }
+    @media (max-width: @screen-sm) {
+      max-width: unset;
+      width: 100%;
+      margin: 2%;
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      strong {
+        font-size: 1.4rem;
+        width: 90%;
+      }
     }
   }
 }

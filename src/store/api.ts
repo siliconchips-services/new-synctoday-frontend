@@ -42,13 +42,27 @@ const createApiInstance = (baseURL: string) => {
 
   instance.interceptors.request.use((config) => {
     const token = getTokenForBaseURL(baseURL);
+    // console.log('config.headers', config.data);
 
-    if (config.headers && typeof config.headers.set === 'function') {
+    if (config?.data?.headers) {
+      console.log('config.data.headers', config?.data?.headers);
+      if (config?.data?.headers?.['x-app-id']) {
+        (config.headers as any).set(
+          'x-app-id',
+          config.data.headers['x-app-id'],
+        );
+      }
       if (token) {
-        config.headers.set('authorization', `Bearer ${token}`);
+        (config.headers as any).set('Authorization', `Bearer ${token}`);
+      }
+    } else if (
+      config.headers &&
+      typeof (config.headers as any).set === 'function'
+    ) {
+      if (token) {
+        (config.headers as any).set('Authorization', `Bearer ${token}`);
       }
     }
-
     return config;
   });
 
