@@ -3,6 +3,7 @@ import { getCookie } from '@/utils/cookie';
 import { appLogin } from './dashboardSlice';
 
 interface OpenAppOptions {
+  appId: string; // must always be passed
   appUrl: string; // must always be passed
   dispatch: AppDispatch;
   setIsLoading: (loading: boolean) => void;
@@ -14,6 +15,7 @@ interface AppLoginResponse {
 }
 
 export const openExternalApp = async ({
+  appId,
   appUrl,
   dispatch,
   setIsLoading,
@@ -24,9 +26,6 @@ export const openExternalApp = async ({
 
     const tenantID = getCookie('tenantID');
     const userToken = getCookie('token');
-    const apiID =
-      import.meta.env.VITE_TENANT_IDENTITY_SERVICE_IDs ??
-      'c35d37a4-b5f6-486d-8f96-a57ec112fb0d';
 
     if (!tenantID || !userToken) {
       throw new Error('Missing tenantID or user token in cookies');
@@ -34,11 +33,13 @@ export const openExternalApp = async ({
 
     // 1. Call backend through Redux action
     const loginResponse = (await dispatch(
-      appLogin(apiID, tenantID, userToken),
+      appLogin(appId, tenantID, userToken),
     )) as unknown as AppLoginResponse;
 
     const userAppToken = loginResponse?.token;
     if (!userAppToken) throw new Error('No token received from appLogin');
+
+    console.log('userAppToken', userAppToken);
 
     // 2. Build form for POST redirect
     const form = document.createElement('form');

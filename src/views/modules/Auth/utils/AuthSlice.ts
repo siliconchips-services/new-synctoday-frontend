@@ -6,7 +6,7 @@ import { AppThunk } from '@/store/app';
 import { platform_identityApi, tenantidentityApi, usersApi } from '@/store/api';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { getCookie, setCookie } from '@/utils/cookie';
+import { getCookie, getCookieDomain, setCookie } from '@/utils/cookie';
 
 interface AuthState {
   appLoading: boolean;
@@ -159,7 +159,10 @@ export const removeToken = (): void => {
   const allCookies = Cookies.get();
 
   Object.keys(allCookies).forEach((cookieName) => {
-    Cookies.remove(cookieName);
+    Cookies.remove(cookieName, {
+      path: '/',
+      domain: getCookieDomain(),
+    });
   });
   localStorage.clear();
 };

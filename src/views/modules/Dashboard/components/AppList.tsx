@@ -40,7 +40,7 @@ const AppList: React.FC = () => {
   }, [handleUsersList]);
 
   const appBox = (app, index) => {
-    const MC_React_loginUrl = 'http://localhost:5174/login';
+    const MC_React_loginUrl = 'http://localhost:5173/login';
 
     const { subSubDomain, subDomain, domain } = parseDomainParts(
       window.location.origin,
@@ -73,9 +73,11 @@ const AppList: React.FC = () => {
               })
             : loginLink !== null
               ? openExternalApp({
+                  appId: app.appId,
                   appUrl: loginLink,
                   dispatch,
                   setIsLoading,
+                  target: '_self', // for testing in same tab (change to '_blank' for new tab)
                 })
               : alert(
                   'This application is not available for external access. Please contact your administrator.',

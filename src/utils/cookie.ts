@@ -8,7 +8,7 @@ const expiresInMs = expiresTime * 60 * 60 * 1000;
 const DEFAULT_EXPIRY = new Date(Date.now() + expiresInMs);
 
 // Figure out the correct domain scope
-const getCookieDomain = () => {
+export const getCookieDomain = () => {
   if (import.meta.env.MODE === 'development') {
     console.log('Dev mode - no domain for cookies (scoped to localhost)');
     return undefined; // ✅ avoid "localhost:port" bug
