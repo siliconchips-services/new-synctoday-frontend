@@ -1,0 +1,365 @@
+.loginForm {
+  &.ant-form {
+    .ant-input,
+    .ant-input:-webkit-autofill,
+    .ant-input:-webkit-autofill:hover,
+    .ant-input:-webkit-autofill:focus,
+    .ant-input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px @white inset !important;
+      color: @text !important;
+      border: none;
+      border-bottom: 1px solid @liteGrey;
+      border-radius: 0;
+    }
+    .ant-input-password {
+      .ant-input,
+      .ant-input:hover,
+      .ant-input:focus,
+      .ant-input:focus-within {
+        border: none;
+      }
+    }
+  }
+  .ant-form-item:has(.ant-form-item-control .ant-input-status-error),
+  .ant-form-item:has(.ant-form-item-control .ant-select-status-error),
+  .ant-form-item:has(.ant-form-item-control .ant-picker-status-error) {
+    .ant-input {
+      border: none;
+      border-bottom: 1px solid @red;
+    }
+    .ant-input-password {
+      .ant-input {
+        border: none !important;
+      }
+    }
+  }
+}
+
+.ant-form-item {
+  position: relative;
+  margin: 0;
+  font-family: @primary-font;
+  font-size: 1.4rem;
+  .ant-skeleton,
+  .ant-skeleton .ant-skeleton-input {
+    width: 100%;
+    min-width: unset;
+  }
+  textarea {
+    resize: none;
+  }
+
+  .ant-select .ant-select-selector,
+  .ant-picker .ant-picker-input > input .ant-input-password,
+  .ant-input {
+    padding: 5px 10px;
+    transition: all 0.3s ease-in-out;
+    font-family: @primary-font;
+    font-size: 1.3rem;
+    border: 1px solid @liteGrey;
+    background-color: @white;
+    border-radius: 10px;
+    font-size: 1.3rem;
+  }
+
+  .ant-form-item-label {
+    margin: 0;
+    padding: 0 0 0.5rem !important;
+    .transition5s();
+    label {
+      color: @primary-color !important;
+      font-size: 1.4rem;
+      font-weight: normal !important;
+
+      &.ant-form-item-required {
+        &::before {
+          display: none;
+        }
+        &::after {
+          display: inline-block;
+          visibility: visible !important;
+          margin-inline-end: 4px;
+          color: @red;
+          font-size: 1.4rem;
+          font-family: SimSun, sans-serif;
+          line-height: 1;
+          content: '*';
+        }
+      }
+    }
+  }
+
+  .ant-select {
+    .ant-select-selection-item,
+    .ant-select-selection-placeholder {
+      font-size: 1.3rem;
+    }
+    .ant-select-arrow .anticon > svg {
+      font-size: 1.3rem;
+    }
+  }
+  &:has(.ant-form-item-control .ant-input-status-error),
+  &:has(.ant-form-item-control .ant-select-status-error),
+  &:has(.ant-form-item-control .ant-picker-status-error) {
+    .ant-form-item-label {
+      label {
+        color: @red !important;
+      }
+    }
+    .ant-select-selector {
+      border: 1px solid @red;
+      .ant-select-selection-placeholder {
+        opacity: 1 !important;
+        color: @red !important;
+      }
+    }
+    .ant-select-arrow .anticon > svg {
+      color: @red !important;
+    }
+
+    input,
+    .ant-input {
+      border: 1px solid @red;
+      &::placeholder {
+        opacity: 1 !important;
+        color: @red !important;
+      }
+    }
+    .ant-input-password {
+      .ant-input {
+        border: none !important;
+      }
+    }
+  }
+
+  .ant-select.ant-select-outlined {
+    &.ant-select-disabled {
+      .ant-select-selection-item {
+        color: @text;
+      }
+    }
+  }
+
+  .ant-form-item-explain-error {
+    font-size: 1.2rem;
+    color: @red;
+    margin: 3px 0 0;
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.ant-select-dropdown {
+  .ant-select-item {
+    margin: 1px 0;
+    .ant-select-item-option-state,
+    .ant-select-item-option-content {
+      font-size: 1.2rem;
+      line-height: 1;
+      padding: 0;
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    &.ant-select-item-option-active,
+    &.ant-select-item-option-selected {
+      .colorOpacity(@secondary-color, 90%);
+      background-color: @computedColor;
+    }
+  }
+}
+
+.ant-btn {
+  font-family: @primary-font;
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1;
+  background: @white;
+  border: 1px solid transparent;
+  color: @primary-color;
+  text-shadow: none;
+  box-shadow: none;
+  border-radius: 200px;
+  height: auto;
+  width: auto;
+  transition: all 0.5s linear;
+  padding: 10px 15px;
+  &.ant-btn-lg {
+    font-size: 2rem;
+    padding: 10px 25px;
+  }
+  &.ant-btn-default {
+    background-color: @liteGrey;
+    color: @black;
+  }
+  &.ant-btn-primary {
+    background-color: @primary-color;
+    color: @white;
+
+    &.cancel-btn {
+      background-color: @red;
+      color: @white;
+      &:not(:disabled):not(.ant-btn-disabled):hover,
+      &:is(:hover, :focus-within) {
+        color: @white;
+        background-color: @error-color;
+        border-color: @red;
+      }
+    }
+    &.update-btn {
+      background-color: @secondary-color;
+      color: @white;
+      &:not(:disabled):not(.ant-btn-disabled):hover,
+      &:is(:hover, :focus-within) {
+        color: @white;
+        background-color: @primary-color;
+        border-color: @secondary-color;
+      }
+    }
+  }
+  &.ant-btn-text {
+    background-color: @secondary-color;
+    color: @white;
+    &:not(:disabled):not(.ant-btn-disabled):hover,
+    &:is(:hover, :focus-within) {
+      color: @white;
+      background-color: @primary-color;
+      border-color: @primary-color;
+    }
+  }
+  &.ant-btn-link {
+    background-color: transparent;
+    color: @secondary-color;
+    &:not(:disabled):not(.ant-btn-disabled):hover,
+    &:is(:hover, :focus-within) {
+      color: @white;
+      background-color: @primary-color;
+      border-color: @primary-color;
+    }
+    &.ant-btn-dangerous,
+    &.cancel-btn {
+      // background-color: @red;
+      color: @red;
+      &:not(:disabled):not(.ant-btn-disabled):hover,
+      &:is(:hover, :focus-within) {
+        color: @white;
+        background-color: @red;
+        border-color: @red;
+      }
+    }
+  }
+  &.ant-btn-dashed {
+    background-color: transparent;
+    color: @primary-color;
+    border-color: @primary-color;
+    svg path {
+      fill: @primary-color;
+    }
+    &:not(:disabled):not(.ant-btn-disabled):hover,
+    &:is(:hover, :focus-within) {
+      color: @white;
+      background-color: @primary-color;
+      border-color: @primary-color;
+      svg path {
+        fill: @white;
+      }
+    }
+  }
+  &:not(:disabled):not(.ant-btn-disabled):hover,
+  &:is(:hover, :focus-within) {
+    transform: none;
+    color: @white;
+    background-color: @secondary-color;
+    border-color: @secondary-color;
+  }
+}
+
+::-webkit-input-placeholder {
+  /* Edge */
+  opacity: 0.5 !important;
+  color: @text !important;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  opacity: 0.5 !important;
+  color: @text !important;
+}
+
+.ant-select-selection-placeholder,
+::placeholder {
+  opacity: 0.5 !important;
+  color: @text !important;
+}
+
+.modalForm,
+.filterForm,
+.filterFormUpdate {
+  margin: 0 0 10px;
+  padding: 10px 15px;
+  background-color: @mainMenuItemBg;
+  border-radius: 20px;
+
+  .ant-form-item {
+    .ant-select .ant-select-selector,
+    .ant-picker .ant-picker-input > input .ant-input-password,
+    .ant-input {
+      background-color: @white;
+      border-radius: 10px;
+      font-size: 1.3rem;
+    }
+    .ant-select-selection-placeholder {
+      font-size: 1.3rem;
+    }
+  }
+  .ant-btn {
+    padding: 5px 15px;
+    font-size: 1.3rem;
+    min-height: 32px;
+  }
+  &.p-0 {
+    padding: 0;
+  }
+}
+.modalForm {
+  padding: 20px;
+}
+.filterFormUpdate {
+  background-color: @white;
+}
+
+.headerButtons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 10px;
+  .ant-btn {
+    padding: 10px 15px;
+    font-size: 1.4rem;
+    line-height: 1;
+    &.deleteBtn {
+      background-color: @red;
+      border-color: @error-color;
+      color: @white;
+      &:hover,
+      &:focus,
+      &:focus-within {
+        background-color: @error-color;
+        border-color: @red;
+      }
+    }
+  }
+}
+
+.ant-input-outlined.ant-input-disabled,
+.ant-input-outlined[disabled],
+.ant-select-outlined.ant-select-disabled:not(.ant-select-customize-input)
+  .ant-select-selector {
+  color: @text;
+  background-color: @mainMenuItemBg;
+  border: 1px solid @liteGrey;
+  cursor: not-allowed;
+  opacity: 1;
+}

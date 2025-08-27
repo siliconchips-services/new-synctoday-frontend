@@ -1,0 +1,15 @@
+diff --git a/node_modules/rc-table/lib/Table.d.ts b/node_modules/rc-table/lib/Table.d.ts
+index a24c89f..203f06c 100644
+--- a/node_modules/rc-table/lib/Table.d.ts
++++ b/node_modules/rc-table/lib/Table.d.ts
+@@ -96,7 +96,9 @@ declare function Table<RecordType extends DefaultRecordType>(tableProps: TablePr
+ export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(props: TableProps<RecordType> & React.RefAttributes<Reference>) => React.ReactElement) & {
+     displayName?: string;
+ };
+-export declare function genTable(shouldTriggerRender?: CompareProps<typeof Table>): ForwardGenericTable;
++// export declare function genTable(shouldTriggerRender?: CompareProps<typeof Table>): ForwardGenericTable;
++export declare function genTable(shouldTriggerRender?: any): ForwardGenericTable;
++
+ declare const ImmutableTable: ForwardGenericTable;
+ type ImmutableTableType = typeof ImmutableTable & {
+     EXPAND_COLUMN: typeof EXPAND_COLUMN;

@@ -1,0 +1,24 @@
+.container,
+.container-fluid {
+  max-width: 100%;
+  width: 100%;
+  padding-right: @gutter;
+  padding-left: @gutter;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container {
+  @media (min-width: @screen-md) {
+    max-width: @screen-md;
+  }
+  @media (min-width: @screen-lg) {
+    max-width: @screen-lg;
+  }
+  @media (min-width: @screen-xl) {
+    max-width: @screen-xl;
+  }
+  @media (min-width: @screen-xxl) {
+    max-width: @screen-xxl;
+  }
+}

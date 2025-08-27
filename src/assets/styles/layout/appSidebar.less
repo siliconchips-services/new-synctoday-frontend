@@ -1,0 +1,214 @@
+.appSidebar {
+  background-color: @offWhite;
+  padding: 20px 15px;
+  .ant-layout-sider-children {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .header {
+    text-align: left;
+    width: 100%;
+    height: auto;
+    padding: 0 5px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    .transition5s();
+    .logoWrapper {
+      width: auto;
+      height: 60px;
+      margin: 0 15px 0 0;
+      .transition5s();
+      a,
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        padding: 0;
+        margin: 0;
+        object-fit: contain;
+      }
+    }
+    .title {
+      font-size: 2rem;
+      color: @primary-color;
+      .transition5s();
+    }
+  }
+
+  .ant-menu {
+    &.ant-menu-light {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: calc(100lvh - 160px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      .ant-menu-item,
+      .ant-menu-submenu {
+        background-color: @mainMenuItemBg;
+        width: 95%;
+        height: auto;
+        min-height: 50px;
+        line-height: 50px;
+        padding: 8px 8px !important;
+        margin: 6px 0 !important;
+        transition: @transition5s;
+        .ant-menu-submenu-title {
+          padding: 0 !important;
+          margin: 0 !important;
+          height: auto;
+          width: auto;
+          line-height: unset;
+        }
+        .iconBox {
+          width: 30px;
+          height: 30px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          background-color: @liteGrey;
+          border-radius: 10px;
+          transition: @transition5s;
+          svg {
+            fill: @darkGrey;
+            transition: @transition3s;
+            path {
+              fill: @darkGrey;
+              transition: @transition3s;
+            }
+          }
+        }
+        .ant-menu-title-content {
+          text-overflow: unset;
+          white-space: normal;
+          font-size: 1.4rem;
+          line-height: 1.3;
+          color: @black;
+        }
+        .ant-menu-sub {
+          background-color: transparent;
+          margin-top: 4px;
+          .iconBox {
+            width: 10px;
+            height: 10px;
+            min-width: unset;
+            min-height: unset;
+          }
+          .ant-menu-item {
+            min-height: 30px !important;
+            padding: 8px !important;
+            &.ant-menu-item-selected,
+            &:hover,
+            &:focus,
+            &:focus-within {
+              background-color: @secondary-color;
+              .iconBox {
+                background-color: @white;
+              }
+              .ant-menu-title-content {
+                color: @white;
+              }
+            }
+          }
+        }
+        &.ant-menu-submenu-open {
+          background-color: @white;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 10%);
+          .ant-menu-sub {
+            .ant-menu-item {
+              .iconBox {
+                background-color: @grey;
+              }
+              &.ant-menu-item-selected {
+                .iconBox {
+                  background-color: @white;
+                }
+              }
+            }
+          }
+        }
+        &.ant-menu-submenu-open.ant-menu-submenu-selected,
+        &.ant-menu-item-active,
+        &:hover,
+        &:focus,
+        &:focus-within {
+          background-color: @white;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 10%);
+          .iconBox {
+            background-color: @secondary-color;
+            svg {
+              fill: @white;
+              path {
+                fill: @white;
+              }
+            }
+          }
+          .ant-menu-sub {
+            .ant-menu-item.ant-menu-item-selected {
+              .iconBox {
+                background-color: @white;
+              }
+            }
+          }
+          .ant-menu-submenu-title {
+            &:hover,
+            &:focus,
+            &:focus-within {
+              background-color: transparent;
+            }
+          }
+        }
+      }
+
+      .ant-menu-submenu {
+        min-height: unset;
+      }
+
+      .ant-menu-submenu-arrow {
+        inset-inline-end: 0px;
+      }
+    }
+  }
+
+  &.ant-layout-sider-collapsed {
+    padding: 10px;
+    .header {
+      margin: 0 0 15px;
+      text-align: center;
+      flex-wrap: wrap;
+      .transition5s();
+      .logoWrapper {
+        width: 100%;
+        margin: 0 0 10px;
+        .transition5s();
+      }
+      .title {
+        width: 100%;
+        text-align: center;
+        .transition5s();
+      }
+    }
+    .ant-menu {
+      &.ant-menu-light {
+        .ant-menu-item,
+        .ant-menu-submenu {
+          // height: 50px;
+          min-height: 30px;
+          line-height: 30px;
+          padding: 10px 12px !important;
+
+          .ant-menu-title-content {
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
