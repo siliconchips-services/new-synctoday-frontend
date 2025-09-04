@@ -40,15 +40,13 @@ const AppList: React.FC = () => {
   }, [handleUsersList]);
 
   const appBox = (app, index) => {
-    const MC_React_loginUrl = 'http://localhost:5173/login';
+    // const MC_React_loginUrl = 'http://localhost:5174/login';
 
-    const { subSubDomain, subDomain, domain } = parseDomainParts(
-      window.location.origin,
-    );
+    const { subDomain } = parseDomainParts(window.location.origin);
 
-    console.log('Sub-sub-domain:', subSubDomain); // "synctoday"
-    console.log('Sub-domain:', subDomain); // "platform"
-    console.log('Domain:', domain); // "siliconchips-syncapps.com"
+    // console.log('Sub-sub-domain:', subSubDomain); // "synctoday"
+    // console.log('Sub-domain:', subDomain); // "platform"
+    // console.log('Domain:', domain); // "siliconchips-syncapps.com"
 
     const mainDomain = 'siliconchips-syncapps.com';
     // (domain || 'siliconchips-syncapps.com');
@@ -67,9 +65,11 @@ const AppList: React.FC = () => {
         onClick={() =>
           app.appId === 'de702cdf-d019-41ab-a8af-80333b8bc28e'
             ? openExternalReactApp({
-                appUrl: MC_React_loginUrl,
+                appId: app.appId,
+                appUrl: loginLink,
                 dispatch,
                 setIsLoading,
+                target: '_blank',
               })
             : loginLink !== null
               ? openExternalApp({
@@ -77,7 +77,7 @@ const AppList: React.FC = () => {
                   appUrl: loginLink,
                   dispatch,
                   setIsLoading,
-                  target: '_self', // for testing in same tab (change to '_blank' for new tab)
+                  target: '_blank',
                 })
               : alert(
                   'This application is not available for external access. Please contact your administrator.',

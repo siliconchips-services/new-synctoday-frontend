@@ -3,7 +3,7 @@ import { getCookie } from '@/utils/cookie';
 import { appLogin } from './dashboardSlice';
 
 interface OpenAppOptions {
-  // apiID: string;
+  appId: string;
   appUrl: string; // e.g., "http://localhost:5174/login"
   dispatch: AppDispatch;
   setIsLoading: (loading: boolean) => void;
@@ -11,7 +11,7 @@ interface OpenAppOptions {
 }
 
 export const openExternalReactApp = async ({
-  // apiID,
+  appId,
   appUrl,
   dispatch,
   setIsLoading,
@@ -22,13 +22,13 @@ export const openExternalReactApp = async ({
 
     const tenantID = getCookie('tenantID');
     const userToken = getCookie('token');
-    const apiID =
-      import.meta.env.VITE_TENANT_IDENTITY_SERVICE_IDs ||
-      'c35d37a4-b5f6-486d-8f96-a57ec112fb0d';
+    // const apiID =
+    //   import.meta.env.VITE_TENANT_IDENTITY_SERVICE_IDs ||
+    //   'c35d37a4-b5f6-486d-8f96-a57ec112fb0d';
 
     // 1. Call backend through Redux action
     const loginResponse: any = await dispatch(
-      appLogin(apiID, tenantID, userToken),
+      appLogin(appId, tenantID, userToken),
     );
 
     const token = loginResponse?.token || null;
