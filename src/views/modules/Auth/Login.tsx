@@ -27,9 +27,9 @@ const Login: React.FC = () => {
       name: 'userId',
       label: 'Emp. ID/Email ID',
       type: 'text',
-      placeholder: 'Enter User ID',
+      placeholder: 'Enter Emp. ID',
       required: true,
-      regex: /^[a-zA-Z0-9@._-]{8,200}$/, // Only alphanumeric, 8-20 chars
+      regex: /^[a-zA-Z0-9@._-]{3,50}$/, // Only alphanumeric, 3-50 chars
       validationMessage: 'Please enter a valid Employee ID or Email ID.',
     },
     {

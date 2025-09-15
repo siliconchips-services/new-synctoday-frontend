@@ -7,7 +7,6 @@ import PageSpinner from '@/components/PageSpinner/PageSpinner';
 import IconButton from '@/components/IconButton';
 
 import { EditOutlined, SafetyCertificateFilled } from '@ant-design/icons';
-import dayjs from 'dayjs';
 import {
   checkEditPermission,
   dateFormatter,
@@ -82,7 +81,7 @@ const Listing: React.FC<ListingProps> = (props) => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'User ID',
+      title: 'Emp. ID',
       dataIndex: 'userId',
       key: 'userId',
       width: 150,

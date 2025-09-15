@@ -40,7 +40,7 @@ const AppList: React.FC = () => {
   }, [handleUsersList]);
 
   const appBox = (app, index) => {
-    // const MC_React_loginUrl = 'http://localhost:5174/login';
+    // const MC_React_loginUrl = 'http://localhost:2100/login';
 
     const { subDomain } = parseDomainParts(window.location.origin);
 
@@ -70,6 +70,7 @@ const AppList: React.FC = () => {
                 dispatch,
                 setIsLoading,
                 target: '_blank',
+                // target: '_self',
               })
             : loginLink !== null
               ? openExternalApp({

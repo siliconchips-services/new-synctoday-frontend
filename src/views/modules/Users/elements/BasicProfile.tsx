@@ -309,7 +309,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
               <Col xs={24} md={12}>
                 <InputBox.Text
                   name="userId"
-                  label="User ID"
+                  label="Emp. ID"
                   rules={[
                     validations.required.text(),
                     validations.max.text(maxName),

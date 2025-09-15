@@ -11,10 +11,10 @@ const Dashboard: React.FC = () => {
       <PageHeader title={DashboardOverview.title} />
       <Card className="mainContent box">
         <Row gutter={[30, 30]}>
-          <Col xs={24} md={12} lg={18}>
+          <Col xs={24} md={12} lg={16}>
             <AppList />
           </Col>
-          <Col xs={24} md={12} lg={6}>
+          <Col xs={24} md={12} lg={8}>
             <HolidayViewer />
           </Col>
         </Row>

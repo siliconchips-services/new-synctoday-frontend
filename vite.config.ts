@@ -18,4 +18,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'), // ✅ Use `path.resolve`
     },
   },
+  server: {
+    port: 2000,
+    open: true, // auto open browser
+  },
 });

@@ -45,7 +45,6 @@ const createApiInstance = (baseURL: string) => {
     // console.log('config.headers', config.data);
 
     if (config?.data?.headers) {
-      console.log('config.data.headers', config?.data?.headers);
       if (config?.data?.headers?.['x-app-id']) {
         (config.headers as any).set(
           'x-app-id',
