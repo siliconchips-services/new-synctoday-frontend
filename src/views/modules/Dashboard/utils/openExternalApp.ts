@@ -37,8 +37,9 @@ export const openExternalApp = async ({
     )) as unknown as AppLoginResponse;
 
     const userAppToken = loginResponse?.token;
-    if (!userAppToken) throw new Error('No token received from appLogin');
+    if (!userAppToken) throw new Error('No token received');
 
+    console.log('appUrl', appUrl);
     console.log('userAppToken', userAppToken);
 
     // 2. Build form for POST redirect

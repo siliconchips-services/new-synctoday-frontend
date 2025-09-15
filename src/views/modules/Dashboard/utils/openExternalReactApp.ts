@@ -35,7 +35,7 @@ export const openExternalReactApp = async ({
     if (!token) throw new Error('No token received');
 
     console.log('appUrl', appUrl);
-    console.log('appUrl token', token);
+    console.log('userAppToken', token);
 
     // 2. Open new tab/window
     const popup = window.open(`${appUrl}/?token=${token}`, target);
