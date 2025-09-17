@@ -21,6 +21,77 @@
     .box {
       background-color: @offWhite;
       border: 1px solid @liteGrey;
+
+      &.birthday,
+      &.anniversary,
+      &.holiday {
+        height: 200px;
+        background-position: center center;
+        background-size: cover;
+        text-align: center;
+
+        .ant-card-body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          isolation: isolate;
+          width: 100%;
+          height: calc(100% - 20px);
+          padding-bottom: 20px;
+          &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            z-index: -1;
+          }
+
+          .title,
+          .subTitle,
+          .text {
+            // background-color: @white;
+            display: block;
+            padding: 0;
+            margin: 0;
+            color: @white;
+            line-height: 1.2;
+            // text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+            text-shadow:
+              0px 3px 0px @primary-color,
+              0px 14px 10px rgba(0, 0, 0, 0.15),
+              0px 24px 2px rgba(0, 0, 0, 0.1),
+              0px 34px 30px rgba(0, 0, 0, 0.1);
+          }
+          .title {
+            font-size: 2rem;
+            font-weight: bold !important ;
+            letter-spacing: 0.05em;
+          }
+          .subTitle {
+            font-size: 1.6rem;
+            font-weight: 400 !important;
+          }
+          .text {
+            font-size: 1.4rem;
+            font-weight: 400 !important;
+          }
+        }
+      }
+      &.birthday {
+        background-image: url('../../images/birthday.jpg');
+      }
+      &.anniversary {
+        background-image: url('../../images/work-anniversary.jpg');
+      }
+      &.holiday {
+        background-image: url('../../images/holiday.jpg');
+      }
     }
   }
 }

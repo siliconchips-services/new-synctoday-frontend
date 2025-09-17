@@ -3,7 +3,9 @@ import PageHeader from '@/components/PageHeader';
 import { DashboardOverview } from '@/config/BreadcrumbConfig';
 import { Card, Col, Row } from 'antd';
 import AppList from './components/AppList';
-import HolidayViewer from './components/HolidayViewer';
+import HolidaySlider from './components/HolidaySlider';
+import TodayBirthdayAnniversary from './components/TodayBirthdayAnniversary';
+import UpcomingBirthdayAnniversary from './components/UpcomingBirthdayAnniversary';
 
 const Dashboard: React.FC = () => {
   return (
@@ -15,7 +17,9 @@ const Dashboard: React.FC = () => {
             <AppList />
           </Col>
           <Col xs={24} md={12} lg={8}>
-            <HolidayViewer />
+            <TodayBirthdayAnniversary />
+            <UpcomingBirthdayAnniversary />
+            <HolidaySlider />
           </Col>
         </Row>
       </Card>

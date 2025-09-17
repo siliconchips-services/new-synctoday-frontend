@@ -7,6 +7,7 @@ import { platform_identityApi, tenantidentityApi, usersApi } from '@/store/api';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { getCookie, getCookieDomain, setCookie } from '@/utils/cookie';
+import { binaryToBase64 } from '@/config/global';
 
 interface AuthState {
   appLoading: boolean;
@@ -310,6 +311,8 @@ export const getUserProfileImage =
         } as CustomAxiosRequestConfig,
       );
       const returnDetails = response?.data;
+      const base64Image = binaryToBase64(returnDetails, 'image/png');
+      localStorage.setItem('userProfile', base64Image);
       dispatch(setUserImg(returnDetails));
       return returnDetails;
     } catch (error: any) {

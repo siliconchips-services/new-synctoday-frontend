@@ -8,7 +8,6 @@ import {
   removeToken,
 } from '@/views/modules/Auth/utils/AuthSlice';
 import path from '@/config/path';
-import { binaryToBase64 } from '@/config/global';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/app';
 import { getCookie } from '@/utils/cookie';
@@ -28,12 +27,13 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = () => {
   const [avatarImg, setAvatarImg] = useState<string>('');
 
   const userImg = useSelector((state: RootState) => state.AUTH.userImg);
+  const userImgCookies = localStorage.getItem('userProfile');
 
-  const getUserImage = async (userImage: ArrayBuffer | null) => {
+  const getUserImage = async (userImage: string | null) => {
     try {
       if (userImage) {
-        const base64Image = binaryToBase64(userImage, 'image/png');
-        setAvatarImg(base64Image);
+        // const base64Image = binaryToBase64(userImage, 'image/png');
+        setAvatarImg(userImage);
       } else {
         setAvatarImg('');
       }
@@ -44,8 +44,8 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = () => {
   };
 
   useEffect(() => {
-    getUserImage(userImg);
-  }, [userImg]);
+    getUserImage(userImgCookies);
+  }, [userImg, userImgCookies]);
 
   useEffect(() => {
     setUserNameState(userFullName || '');
