@@ -42,7 +42,6 @@ const createApiInstance = (baseURL: string) => {
 
   instance.interceptors.request.use((config) => {
     const token = getTokenForBaseURL(baseURL);
-    // console.log('config.headers', config.data);
 
     if (config?.data?.headers) {
       if (config?.data?.headers?.['x-app-id']) {

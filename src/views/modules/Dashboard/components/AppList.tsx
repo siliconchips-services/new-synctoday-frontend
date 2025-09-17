@@ -44,10 +44,6 @@ const AppList: React.FC = () => {
 
     const { subDomain } = parseDomainParts(window.location.origin);
 
-    // console.log('Sub-sub-domain:', subSubDomain); // "synctoday"
-    // console.log('Sub-domain:', subDomain); // "platform"
-    // console.log('Domain:', domain); // "siliconchips-syncapps.com"
-
     const mainDomain = 'siliconchips-syncapps.com';
     // (domain || 'siliconchips-syncapps.com');
     const tenantSubDomain = subDomain || 'platform';
