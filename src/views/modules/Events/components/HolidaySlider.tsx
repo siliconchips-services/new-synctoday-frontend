@@ -42,10 +42,9 @@ export default function HolidaySlider() {
 
   return (
     <Carousel
-      effect="fade"
+      // effect="fade"
       draggable
-      arrows
-      dots={false}
+      dots
       infinite={true}
       speed={1000}
       style={{ marginBottom: 20 }}

@@ -51,7 +51,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             size={btnSize}
             loading={btnLoading}
           >
-            Submit
+            Login
           </Button>
         </Col>
       </Row>

@@ -3,11 +3,17 @@ import { Layout, Menu } from 'antd';
 import Config from '../../../config/Config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LogoComponent from '../Components/LogoComponent';
-import { camelCaseString } from '@/config/global';
+import {
+  camelCaseString,
+  base64ToImageSrc,
+  parseDomainParts,
+} from '@/config/global';
 
 import SVGIcon from '@/components/SVGIcon';
 import sidebarMenu from './sidebar';
-
+import { AppDispatch } from '@/store/app';
+import { useDispatch } from 'react-redux';
+import { openExternalReactApp } from '@/views/modules/Dashboard/utils/openExternalReactApp';
 interface AppSidebarViewProps {
   collapsed: boolean;
   SetCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,8 +23,15 @@ const SidebarView: React.FC<AppSidebarViewProps> = ({
   collapsed,
   SetCollapsed,
 }) => {
+  const dispatch: AppDispatch = useDispatch();
+
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { subDomain } = parseDomainParts(window.location.origin);
+  const mainDomain = 'siliconchips-syncapps.com';
+  const tenantSubDomain = subDomain || 'platform';
+
   const [menu, setMenu] = useState<any>([]);
   const [openMenu, setOpenMenu] = useState<any>([]);
 
@@ -33,6 +46,7 @@ const SidebarView: React.FC<AppSidebarViewProps> = ({
     role: <SVGIcon name="idCard" />,
     permission: <SVGIcon name="securityPin" />,
     coreConfig: <SVGIcon name="cog" />,
+    birthdaysHolidays: <SVGIcon name="list" />,
   };
 
   const AppMenu = useCallback((menuItems: any[]): any[] => {
@@ -40,6 +54,8 @@ const SidebarView: React.FC<AppSidebarViewProps> = ({
       const iconKey = camelCaseString(item.label)
         .replace(' ', '')
         .replace('&', '');
+      console.log('iconKey', iconKey);
+
       const icon = <span className="iconBox">{svgIcons[iconKey]}</span>;
 
       if (item.children) {
@@ -71,13 +87,64 @@ const SidebarView: React.FC<AppSidebarViewProps> = ({
     return [];
   };
 
+  const getMCApp = localStorage.getItem('mcApp');
+  const mcApp = getMCApp ? JSON.parse(getMCApp) : null;
+
+  const loginLink = mcApp?.subSubDomain
+    ? `https://${mcApp.subSubDomain}.${tenantSubDomain}.${mainDomain}`
+    : null;
+
   useEffect(() => {
-    const formattedMenu = AppMenu(sidebarMenu);
+    let formattedMenu = AppMenu(sidebarMenu);
+
+    // 🎯 Add custom menu only if condition is met
+    if (mcApp?.appId === 'de702cdf-d019-41ab-a8af-80333b8bc28e') {
+      formattedMenu = [
+        ...formattedMenu,
+        {
+          key: 'dashboard',
+          label: (
+            <span
+              onClick={() => {
+                openExternalReactApp({
+                  appId: mcApp.appId,
+                  appUrl: loginLink,
+                  dispatch,
+                  target: '_blank', // or "_self"
+                });
+              }}
+            >
+              <span>{mcApp?.displayName}</span>
+            </span>
+          ),
+          icon: (
+            <span className="iconBox">
+              <img
+                key={mcApp.appId}
+                src={base64ToImageSrc(mcApp?.logoImage)}
+                alt={mcApp.displayName}
+                style={{ width: 18, height: 18, marginLeft: 4 }}
+                loading="lazy"
+              />
+            </span>
+          ),
+        },
+      ];
+    }
+
     setMenu(formattedMenu);
 
     const openKeys = findOpenKeys(sidebarMenu, location.pathname);
     setOpenMenu(openKeys);
-  }, [location.pathname, AppMenu]);
+  }, [
+    dispatch,
+    location.pathname,
+    AppMenu,
+    mcApp?.appId,
+    mcApp?.displayName,
+    mcApp?.logoImage,
+    loginLink,
+  ]);
 
   // const handleOpenChange = (keys: string[]) => {
   //   const latestKey = keys.find((key) => !openKeys.includes(key));

@@ -273,7 +273,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
     >
       <Spin spinning={userPrefLoading}>
         <Row gutter={[10, 10]}>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <InputBox.Select
               name="languageCode"
               label="Language"
@@ -288,7 +288,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               rules={[validations.required.select()]}
             />
           </Col>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <InputBox.Select
               name="timezoneCode"
               label="Time Zone"
@@ -306,7 +306,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               rules={[validations.required.select()]}
             />
           </Col>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <InputBox.Select
               name="dateFormat"
               label="Date Format"
@@ -324,7 +324,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               rules={[validations.required.select()]}
             />
           </Col>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <InputBox.Select
               name="timeFormat"
               label="Time Format"
@@ -342,7 +342,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               rules={[validations.required.select()]}
             />
           </Col>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <InputBox.Select
               name="primary-font"
               label="Primary Font"
@@ -359,7 +359,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               rules={[validations.required.select()]}
             />
           </Col>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <Form.Item name="primary-color" label="Primary Color">
               <Space>
                 <InputBox.ColorPicker
@@ -378,7 +378,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               </Space>
             </Form.Item>
           </Col>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <Form.Item name="secondary-color" label="Secondary Color">
               <Space>
                 <InputBox.ColorPicker
@@ -397,7 +397,7 @@ const UserPreference: React.FC<UserPreferenceProps> = ({
               </Space>
             </Form.Item>
           </Col>
-          <Col xs={24} className="pt-20 text-left">
+          <Col xs={24} sm={12} className="8-20 text-left">
             <Button
               loading={saving}
               disabled={disabled}

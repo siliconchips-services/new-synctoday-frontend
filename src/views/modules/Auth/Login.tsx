@@ -25,18 +25,18 @@ const Login: React.FC = () => {
   const formInputs = [
     {
       name: 'userId',
-      label: 'Emp. ID',
+      // label: 'Emp. ID',
       type: 'text',
-      placeholder: 'Enter Emp. ID',
+      placeholder: 'Enter Login ID',
       required: true,
       regex: /^[a-zA-Z0-9@._-]{3,50}$/, // Only alphanumeric, 3-50 chars
       validationMessage: 'Please enter a valid Employee ID.',
     },
     {
       name: 'password',
-      label: 'Password',
+      // label: 'Password',
       type: 'password',
-      placeholder: 'Enter password',
+      placeholder: 'Enter Password',
       required: true,
     },
   ];
@@ -123,7 +123,6 @@ const Login: React.FC = () => {
   return tenantID ? (
     <>
       <div className="box">
-        <h2 className="title">Login</h2>
         <Skeleton loading={!fields} round active>
           <Row gutter={[20, 20]}>
             {fields && (

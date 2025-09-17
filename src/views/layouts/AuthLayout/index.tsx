@@ -92,41 +92,40 @@ const AuthLayout: React.FC = () => {
 
   return isShow ? (
     <Layout.Content className="loginWrapper">
-      <div className="bannerSection">
-        <div className="box">
+      <div className="formSection">
+        <div className="box text-center">
           <img
             src={base64ToImageSrc(appData.logoImage) || logo}
             alt={appData?.displayName ?? 'SyncToday'}
-            className="logo"
+            className="logo ml-20"
           />
 
-          <h2>{appData?.displayName ?? 'SyncToday'}</h2>
+          <h2 className="title">{appData?.displayName ?? 'SyncToday'}</h2>
         </div>
-        <div className="footer">
-          <img
-            src={
-              base64ToImageSrc(tenantData?.logoImage) ||
-              './siliconchips-services-logo.png'
-            }
-            alt={tenantData?.displayName ?? 'logo'}
-            className="logo"
-          />
-          <div className="text">
-            <a
-              href={
-                tenantData?.website || 'https://www.siliconchips-services.com'
-              }
-              target="_blank"
-            >
-              {tenantData?.website
-                ? stripProtocol(tenantData?.website)
-                : 'www.siliconchips-services.com'}
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="formSection">
         <Outlet />
+      </div>
+
+      <div className="footer">
+        <img
+          src={
+            base64ToImageSrc(tenantData?.logoImage) ||
+            './siliconchips-services-logo.png'
+          }
+          alt={tenantData?.displayName ?? 'logo'}
+          className="logo"
+        />
+        <div className="text">
+          <a
+            href={
+              tenantData?.website || 'https://www.siliconchips-services.com'
+            }
+            target="_blank"
+          >
+            {tenantData?.website
+              ? stripProtocol(tenantData?.website)
+              : 'www.siliconchips-services.com'}
+          </a>
+        </div>
       </div>
     </Layout.Content>
   ) : (

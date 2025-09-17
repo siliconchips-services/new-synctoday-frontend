@@ -17,7 +17,6 @@ interface ProfileDropDownProps {
 }
 
 const ProfileDropDown: React.FC<ProfileDropDownProps> = () => {
-  // const dispatch: AppDispatch = useDispatch();
   const popoverRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const userFullName = getCookie('userFullName');
@@ -49,7 +48,7 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = () => {
 
   useEffect(() => {
     setUserNameState(userFullName || '');
-  }, [navigate]);
+  }, [navigate, userFullName]);
 
   const greeting = (
     <div className="profileDropdown" ref={popoverRef}>

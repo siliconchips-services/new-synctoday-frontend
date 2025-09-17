@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { fetchAppsList } from '../utils/dashboardSlice';
 import { getCookie } from '@/utils/cookie';
 import { base64ToImageSrc, parseDomainParts } from '@/config/global';
-import { openExternalReactApp } from '../utils/openExternalReactApp';
 import { openExternalApp } from '../utils/openExternalApp';
 const defaultAppLogo =
   'https://placehold.co/90/DDD/31343C?font=poppins&text=Icon\nMissing';
@@ -19,7 +18,7 @@ const AppList: React.FC = () => {
   const tenantId = getCookie('tenantID');
   const userId = getCookie('userID');
 
-  const handleUsersList = React.useCallback(async () => {
+  const handleAppsList = React.useCallback(async () => {
     setLoading(true);
 
     if (tenantId && userId) {
@@ -27,6 +26,15 @@ const AppList: React.FC = () => {
         const action: any = await dispatch(fetchAppsList(tenantId, userId));
         const res = action.apps;
         setAppList(res || []);
+
+        // 🎯 Filter specific app
+        const targetApp = res?.find(
+          (app: any) => app.appId === 'de702cdf-d019-41ab-a8af-80333b8bc28e',
+        );
+
+        if (targetApp) {
+          localStorage.setItem('mcApp', JSON.stringify(targetApp));
+        }
       } catch (error) {
         console.warn('Error: ', error);
       } finally {
@@ -36,8 +44,8 @@ const AppList: React.FC = () => {
   }, [tenantId, userId, dispatch]);
 
   useEffect(() => {
-    handleUsersList();
-  }, [handleUsersList]);
+    handleAppsList();
+  }, [handleAppsList]);
 
   const appBox = (app, index) => {
     // const MC_React_loginUrl = 'http://localhost:2100/login';
@@ -59,26 +67,17 @@ const AppList: React.FC = () => {
         key={index}
         className="appBox"
         onClick={() =>
-          app.appId === 'de702cdf-d019-41ab-a8af-80333b8bc28e'
-            ? openExternalReactApp({
+          loginLink !== null
+            ? openExternalApp({
                 appId: app.appId,
                 appUrl: loginLink,
                 dispatch,
                 setIsLoading,
                 target: '_blank',
-                // target: '_self',
               })
-            : loginLink !== null
-              ? openExternalApp({
-                  appId: app.appId,
-                  appUrl: loginLink,
-                  dispatch,
-                  setIsLoading,
-                  target: '_blank',
-                })
-              : alert(
-                  'This application is not available for external access. Please contact your administrator.',
-                )
+            : alert(
+                'This application is not available for external access. Please contact your administrator.',
+              )
         }
         style={{ cursor: 'pointer' }}
       >
@@ -120,11 +119,14 @@ const AppList: React.FC = () => {
       <Card className="box">
         <Row>
           <Col xs={24}>
-            <h2>Applications</h2>
             {!loading ? (
               <ul className="appList" key={'appList'}>
                 {appList.length > 0 ? (
-                  appList.map((app: any, index: number) => appBox(app, index))
+                  appList.map((app: any, index: number) =>
+                    app.appId === 'de702cdf-d019-41ab-a8af-80333b8bc28e'
+                      ? null
+                      : appBox(app, index),
+                  )
                 ) : (
                   <li className="text-center mt-20" key={'noApps'}>
                     <p>No applications found.</p>

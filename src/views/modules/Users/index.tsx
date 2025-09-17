@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AppDispatch } from '@/store/app';
 import { useDispatch } from 'react-redux';
-import PageHeader from '@/components/PageHeader';
-import { UsersBreadcrumb } from '@/config/BreadcrumbConfig';
-import { Button, Card } from 'antd';
+// import PageHeader from '@/components/PageHeader';
+// import { UsersBreadcrumb } from '@/config/BreadcrumbConfig';
+import { Card } from 'antd';
 import { getUsersList } from './utils/usersSlice';
 import Listing from './components/UserListing';
 import EditUserDetails from './components/EditUserDetails';
@@ -19,6 +19,7 @@ import { CONSTANT } from '@/config/Constant';
 // } from '@/config/global';
 import RestrictedAccessPage from '@/views/errors/RestrictedAccessPage';
 import { getCookie } from '@/utils/cookie';
+import { checkAddPermission, checkEditPermission } from '@/config/global';
 
 const Users: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -87,35 +88,35 @@ const Users: React.FC = () => {
     handleUsersList();
   }, []);
 
-  // const canEdit = checkEditPermission('User');
-  // const canAdd = checkAddPermission('User');
+  const canEdit = checkEditPermission('User');
+  const canAdd = checkAddPermission('User');
   // const canManage = checkPermission('User', 'All');
 
-  const canEdit = true;
-  const canAdd = true;
-  const canManage = true;
+  // const canEdit = true;
+  // const canAdd = true;
+  // const canManage = true;
 
-  const headerButtons = (
-    <div className="headerButtons">
-      {(canAdd || canManage) && (
-        <Button
-          type="primary"
-          onClick={handleNewUserProfileDrawer}
-          disabled={loading}
-        >
-          Add New
-        </Button>
-      )}
-    </div>
-  );
+  // const headerButtons = (
+  //   <div className="headerButtons">
+  //     {(canAdd || canManage) && (
+  //       <Button
+  //         type="primary"
+  //         onClick={handleNewUserProfileDrawer}
+  //         disabled={loading}
+  //       >
+  //         Add New
+  //       </Button>
+  //     )}
+  //   </div>
+  // );
 
   return (
     <>
-      <PageHeader
+      {/* <PageHeader
         breadcrumbs={UsersBreadcrumb}
         title={UsersBreadcrumb.title}
         children={headerButtons}
-      />
+      /> */}
       {canEdit || canAdd ? (
         <Card className="mainContent box">
           <Listing

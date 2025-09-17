@@ -241,7 +241,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
         autoFocus={true}
       >
         <Row gutter={[10, 10]}>
-          <Col xs={24} md={6}>
+          <Col xs={24} md={6} lg={4}>
             <Form.Item className="m-0" label="Profile Photo">
               <ImgCrop
                 showReset
@@ -304,7 +304,7 @@ const BasicProfile: React.FC<BasicProfileProps> = (props) => {
               </Button>
             ) : null}
           </Col>
-          <Col xs={24} md={18}>
+          <Col xs={24} md={18} lg={12} xxl={10}>
             <Row gutter={[10, 10]}>
               <Col xs={24} md={12}>
                 <InputBox.Text

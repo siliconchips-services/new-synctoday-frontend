@@ -11,8 +11,9 @@ import PageNotFound from '../views/errors/PageNotFound';
 
 import Dashboard from '../views/modules/Dashboard';
 
-import Users from '@/views/modules/Users';
 import UserProfile from '@/views/modules/Users/components/UserProfile';
+
+import Events from '@/views/modules/Events';
 
 export default function Router() {
   return useRoutes(RouterConfig);
@@ -43,14 +44,13 @@ export const RouterConfig = [
         path: paths.dashboard,
         element: <ModuleWrap module={Dashboard} />,
       },
-
-      {
-        path: paths.users.list,
-        element: <ModuleWrap module={Users} />,
-      },
       {
         path: paths.users.profile,
         element: <ModuleWrap module={UserProfile} />,
+      },
+      {
+        path: paths.events,
+        element: <ModuleWrap module={Events} />,
       },
       {
         path: '*',

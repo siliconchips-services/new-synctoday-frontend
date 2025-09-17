@@ -10,7 +10,26 @@
     box-shadow: @box-shadow;
     border: none;
     border-radius: 20px;
+    .eventsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      .ant-carousel {
+        width: 33%;
+      }
+      @media screen and (max-width: @screen-md) {
+        .ant-carousel {
+          width: 48%;
+        }
+      }
+      @media screen and (max-width: @screen-sm) {
+        .ant-carousel {
+          width: 100%;
+        }
+      }
+    }
   }
+
   .mainContent {
     margin: 10px 0;
     height: auto;
@@ -29,6 +48,11 @@
         background-position: center center;
         background-size: cover;
         text-align: center;
+        user-select: none;
+        /* For older browser compatibility (especially Safari) */
+        -webkit-user-select: none;
+        -ms-user-select: none; /* For IE 10 and 11 */
+        cursor: grab;
 
         .ant-card-body {
           display: flex;

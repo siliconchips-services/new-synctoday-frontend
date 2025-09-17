@@ -5,7 +5,7 @@ import { FormBox, InputBox } from '@/components/AntdAddons';
 import { AppDispatch } from '@/store/app';
 import { regexPatterns, validations } from '@/config/validations/validations';
 import { changeUserPassword } from '../utils/usersSlice';
-import { checkPermission } from '@/config/global';
+// import { checkPermission } from '@/config/global';
 import { getCookie } from '@/utils/cookie';
 
 interface ChangePasswordProps {
@@ -43,7 +43,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
         setSaving(false);
       });
   };
-  const canResetPassword = checkPermission('User', 'ResetPassword');
+  // const canResetPassword = checkPermission('User', 'ResetPassword');
   return (
     <>
       <FormBox
@@ -51,10 +51,10 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
         onFinish={handleFinish}
         onFinishFailed={handleChange}
         validateTrigger={['onBlur', 'onInput']}
-        disabled={!canResetPassword}
+        // disabled={!canResetPassword}
       >
         <Row gutter={[10, 10]}>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <InputBox.Password
               name="password"
               label="Password"
@@ -67,7 +67,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
               ]}
             />
           </Col>
-          <Col xs={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={6}>
             <InputBox.Password
               name="confirmPassword"
               label="Confirm Password"

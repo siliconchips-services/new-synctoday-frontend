@@ -6,7 +6,6 @@ interface OpenAppOptions {
   appId: string;
   appUrl: string; // e.g., "http://localhost:5174/login"
   dispatch: AppDispatch;
-  setIsLoading: (loading: boolean) => void;
   target?: '_blank' | '_self';
 }
 
@@ -14,12 +13,9 @@ export const openExternalReactApp = async ({
   appId,
   appUrl,
   dispatch,
-  setIsLoading,
   target = '_blank',
 }: OpenAppOptions) => {
   try {
-    setIsLoading(true);
-
     const tenantID = getCookie('tenantID');
     const userToken = getCookie('token');
     // const apiID =
@@ -52,7 +48,5 @@ export const openExternalReactApp = async ({
     }, 200);
   } catch (err) {
     console.error('Error opening external app:', err);
-  } finally {
-    setIsLoading(false);
   }
 };

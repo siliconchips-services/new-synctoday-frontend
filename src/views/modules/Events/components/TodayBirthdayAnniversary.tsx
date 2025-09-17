@@ -42,15 +42,14 @@ export default function TodayBirthdayAnniversary() {
   return (
     <div>
       <Carousel
-        effect="fade"
+        // effect="fade"
         draggable
-        arrows
-        dots={false}
+        dots
         infinite={true}
         speed={1000}
         style={{ marginBottom: 20 }}
       >
-        {slides.map((item, idx) => (
+        {slides?.map((item, idx) => (
           <Card
             className={`box ${item.type === 'birthday' ? 'birthday' : 'anniversary'}`}
             key={idx}
