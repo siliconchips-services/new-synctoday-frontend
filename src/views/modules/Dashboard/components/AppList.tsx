@@ -34,6 +34,10 @@ const AppList: React.FC = () => {
 
         if (targetApp) {
           localStorage.setItem('mcApp', JSON.stringify(targetApp));
+          window.dispatchEvent(new Event('mcAppUpdated'));
+        } else {
+          localStorage.setItem('mcApp', '');
+          window.dispatchEvent(new Event('mcAppUpdated'));
         }
       } catch (error) {
         console.warn('Error: ', error);

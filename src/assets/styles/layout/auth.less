@@ -30,6 +30,8 @@
     width: 80%;
     max-width: 500px;
     min-height: 250px;
+    max-height: 300px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,9 +40,18 @@
     .colorOpacity(@primary-color, 80%);
     border: 1px solid @computedColor;
     border-radius: 15px;
+
+    .card__spinner__wrapper,
+    .fullscreen__spinner__wrapper {
+      height: auto !important;
+      min-height: 100px !important;
+      width: 150px;
+    }
     .box {
       margin: auto;
-      padding: 30px;
+      padding: 15px;
+      width: 50%;
+
       .logo {
         width: 100px;
         height: auto;
@@ -51,10 +62,35 @@
         font-weight: 400;
         margin: 0 auto;
         padding: 0;
+        text-align: center;
+        word-wrap: break-word;
       }
       .ant-btn {
         font-size: 1.4rem;
+        line-height: 1.3;
         padding: 8px 20px;
+        white-space: wrap;
+        word-wrap: break-word;
+        width: 100%;
+      }
+
+      .ant-result {
+        padding: 10px 20px;
+        border: none !important;
+        .ant-result-title {
+          font-size: 1.8rem;
+          font-weight: bold !important;
+        }
+        .ant-result-subtitle {
+          font-size: 1.6rem;
+          font-weight: normal;
+        }
+        .ant-result-extra {
+          margin: 10px 0 0;
+        }
+        .ant-result-icon.ant-result-image {
+          display: none;
+        }
       }
     }
   }
@@ -70,7 +106,7 @@
     align-items: baseline;
     justify-content: space-between;
     .logo {
-      margin: 0 auto 20px;
+      margin: 0 0;
       width: 80%;
       max-width: 250px;
     }
@@ -130,6 +166,7 @@
     .formSection {
       box-shadow: none;
       flex-direction: column;
+      border: none;
     }
     .footer {
       padding: 10px 10px;

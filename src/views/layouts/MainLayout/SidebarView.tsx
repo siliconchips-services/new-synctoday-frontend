@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Spin } from 'antd';
 import Config from '../../../config/Config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LogoComponent from '../Components/LogoComponent';
@@ -14,6 +14,7 @@ import sidebarMenu from './sidebar';
 import { AppDispatch } from '@/store/app';
 import { useDispatch } from 'react-redux';
 import { openExternalReactApp } from '@/views/modules/Dashboard/utils/openExternalReactApp';
+
 interface AppSidebarViewProps {
   collapsed: boolean;
   SetCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,46 +35,51 @@ const SidebarView: React.FC<AppSidebarViewProps> = ({
 
   const [menu, setMenu] = useState<any>([]);
   const [openMenu, setOpenMenu] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
 
-  const svgIcons: any = {
-    dashboard: <SVGIcon name="home" />,
-    users: <SVGIcon name="user" />,
-    logs: <SVGIcon name="list" />,
-    notifications: <SVGIcon name="bell" />,
-    identityAccessManagement: <SVGIcon name="setting" />,
-    tenants: <SVGIcon name="officeBuilding" />,
-    applications: <SVGIcon name="webDevelopment" />,
-    role: <SVGIcon name="idCard" />,
-    permission: <SVGIcon name="securityPin" />,
-    coreConfig: <SVGIcon name="cog" />,
-    birthdaysHolidays: <SVGIcon name="list" />,
-  };
+  const svgIcons: any = React.useMemo(
+    () => ({
+      dashboard: <SVGIcon name="home" />,
+      users: <SVGIcon name="user" />,
+      logs: <SVGIcon name="list" />,
+      notifications: <SVGIcon name="bell" />,
+      identityAccessManagement: <SVGIcon name="setting" />,
+      tenants: <SVGIcon name="officeBuilding" />,
+      applications: <SVGIcon name="webDevelopment" />,
+      role: <SVGIcon name="idCard" />,
+      permission: <SVGIcon name="securityPin" />,
+      coreConfig: <SVGIcon name="cog" />,
+      birthdaysHolidays: <SVGIcon name="list" />,
+    }),
+    [],
+  );
 
-  const AppMenu = useCallback((menuItems: any[]): any[] => {
-    return menuItems.map((item) => {
-      const iconKey = camelCaseString(item.label)
-        .replace(' ', '')
-        .replace('&', '');
-      console.log('iconKey', iconKey);
+  const AppMenu = useCallback(
+    (menuItems: any[]): any[] => {
+      return menuItems.map((item) => {
+        const iconKey = camelCaseString(item.label)
+          .replace(' ', '')
+          .replace('&', '');
+        const icon = <span className="iconBox">{svgIcons[iconKey]}</span>;
 
-      const icon = <span className="iconBox">{svgIcons[iconKey]}</span>;
+        if (item.children) {
+          return {
+            key: item.key,
+            label: item.label,
+            icon,
+            children: AppMenu(item.children),
+          };
+        }
 
-      if (item.children) {
         return {
-          key: item.key,
+          key: item.path,
           label: item.label,
           icon,
-          children: AppMenu(item.children),
         };
-      }
-
-      return {
-        key: item.path,
-        label: item.label,
-        icon,
-      };
-    });
-  }, []);
+      });
+    },
+    [svgIcons],
+  );
 
   const findOpenKeys = (menuItems: any[], path: string): string[] => {
     for (const item of menuItems) {
@@ -87,69 +93,71 @@ const SidebarView: React.FC<AppSidebarViewProps> = ({
     return [];
   };
 
-  const getMCApp = localStorage.getItem('mcApp');
-  const mcApp = getMCApp ? JSON.parse(getMCApp) : null;
+  // read mcApp from localStorage
+  const [mcApp, setMcApp] = useState(() => {
+    const stored = localStorage.getItem('mcApp');
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      const stored = localStorage.getItem('mcApp');
+      setMcApp(stored ? JSON.parse(stored) : null);
+    };
+    window.addEventListener('mcAppUpdated', handleUpdate);
+    return () => window.removeEventListener('mcAppUpdated', handleUpdate);
+  }, []);
 
   const loginLink = mcApp?.subSubDomain
     ? `https://${mcApp.subSubDomain}.${tenantSubDomain}.${mainDomain}`
     : null;
 
   useEffect(() => {
-    let formattedMenu = AppMenu(sidebarMenu);
+    console.log('Sidebar effect triggered');
+    setLoading(true);
 
-    // 🎯 Add custom menu only if condition is met
-    if (mcApp?.appId === 'de702cdf-d019-41ab-a8af-80333b8bc28e') {
-      formattedMenu = [
-        ...formattedMenu,
-        {
-          key: 'dashboard',
-          label: (
-            <span
-              onClick={() => {
-                openExternalReactApp({
-                  appId: mcApp.appId,
-                  appUrl: loginLink,
-                  dispatch,
-                  target: '_blank', // or "_self"
-                });
-              }}
-            >
-              <span>{mcApp?.displayName}</span>
-            </span>
-          ),
-          icon: (
-            <span className="iconBox">
-              <img
-                key={mcApp.appId}
-                src={base64ToImageSrc(mcApp?.logoImage)}
-                alt={mcApp.displayName}
-                style={{ width: 18, height: 18, marginLeft: 4 }}
-                loading="lazy"
-              />
-            </span>
-          ),
-        },
-      ];
-    }
+    const timer = setTimeout(() => {
+      try {
+        const formattedMenu = AppMenu(sidebarMenu);
 
-    setMenu(formattedMenu);
+        let mcMenu = null;
+        if (mcApp?.appId === 'de702cdf-d019-41ab-a8af-80333b8bc28e') {
+          mcMenu = {
+            key: 'dashboardMC',
+            label: <span>{mcApp.displayName}</span>,
+            icon: (
+              <span className="iconBox">
+                <img
+                  src={base64ToImageSrc(mcApp.logoImage)}
+                  alt={mcApp.displayName}
+                  style={{ width: 18, height: 18, marginLeft: 4 }}
+                />
+              </span>
+            ),
+            onClick: () =>
+              openExternalReactApp({
+                appId: mcApp.appId,
+                appUrl: loginLink,
+                dispatch,
+                target: '_blank',
+              }),
+          };
+        }
 
-    const openKeys = findOpenKeys(sidebarMenu, location.pathname);
-    setOpenMenu(openKeys);
-  }, [
-    dispatch,
-    location.pathname,
-    AppMenu,
-    mcApp?.appId,
-    mcApp?.displayName,
-    mcApp?.logoImage,
-    loginLink,
-  ]);
+        const newMenu = [...formattedMenu, ...(mcMenu ? [mcMenu] : [])];
+        setMenu(newMenu);
 
-  // const handleOpenChange = (keys: string[]) => {
-  //   const latestKey = keys.find((key) => !openKeys.includes(key));
-  //   setOpenKeys(latestKey ? [latestKey] : []);
-  // };
+        const openKeys = findOpenKeys(sidebarMenu, location.pathname);
+        setOpenMenu(openKeys);
+      } catch (err) {
+        console.error('Sidebar build error:', err);
+      } finally {
+        setLoading(false);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [AppMenu, mcApp, loginLink, location.pathname, dispatch]);
 
   return (
     <Layout.Sider
@@ -170,15 +178,22 @@ const SidebarView: React.FC<AppSidebarViewProps> = ({
           <h3 className="title">SyncToday</h3>
         )}
       </div>
-      <Menu
-        mode="inline"
-        theme="light"
-        selectedKeys={[location.pathname]}
-        openKeys={openMenu}
-        onOpenChange={(keys) => setOpenMenu(keys)}
-        items={menu}
-        onClick={(item) => navigate(item.key)}
-      />
+      {loading ? (
+        <Spin
+          tip="Loading..."
+          style={{ margin: '100px auto', display: 'block' }}
+        />
+      ) : (
+        <Menu
+          mode="inline"
+          theme="light"
+          selectedKeys={[location.pathname]}
+          openKeys={openMenu}
+          onOpenChange={(keys) => setOpenMenu(keys)}
+          items={menu}
+          onClick={(item) => navigate(item.key)}
+        />
+      )}
     </Layout.Sider>
   );
 };

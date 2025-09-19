@@ -45,6 +45,10 @@ export const RouterConfig = [
         element: <ModuleWrap module={Dashboard} />,
       },
       {
+        path: paths.dashboardMC,
+        element: <ModuleWrap module={Dashboard} />,
+      },
+      {
         path: paths.users.profile,
         element: <ModuleWrap module={UserProfile} />,
       },
