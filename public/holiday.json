@@ -1,99 +1,106 @@
 [
     {
         "id": "H001",
-        "date": "01-Jan-2025",
-        "day": "Wednesday",
+        "date": "01-Jan-2026",
+        "day": "Thursday",
         "occasion": "New Year",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H002",
-        "date": "14-Jan-2025",
-        "day": "Tuesday",
+        "date": "15-Jan-2026",
+        "day": "Thursday",
         "occasion": "Pongal",
         "location": "Chennai"
     },
     {
         "id": "H003",
-        "date": "26-Jan-2025",
-        "day": "Sunday",
+        "date": "26-Jan-2026",
+        "day": "Monday",
         "occasion": "Republic Day",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H004",
-        "date": "14-Mar-2025",
-        "day": "Friday",
+        "date": "03-Mar-2026",
+        "day": "Tuesday",
         "occasion": "Holi",
         "location": "Mumbai"
     },
     {
         "id": "H005",
-        "date": "31-Mar-2025",
-        "day": "Monday",
+        "date": "21-Mar-2026",
+        "day": "Saturday",
         "occasion": "Ramzan Id (Id-Ul-Fitar)",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H006",
-        "date": "18-Apr-2025",
+        "date": "03-Apr-2026",
         "day": "Friday",
         "occasion": "Good Friday",
         "location": "Chennai"
     },
     {
         "id": "H007",
-        "date": "01-May-2025",
-        "day": "Thursday",
+        "date": "01-May-2026",
+        "day": "Friday",
         "occasion": "May Day",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H008",
-        "date": "15-Aug-2025",
-        "day": "Friday",
+        "date": "15-Aug-2026",
+        "day": "Saturday",
         "occasion": "Independence Day",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H009",
-        "date": "27-Aug-2025",
-        "day": "Wednesday",
+        "date": "14-Sep-2026",
+        "day": "Monday",
         "occasion": "Ganesh Chaturthi",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H010",
-        "date": "02-Oct-2025",
-        "day": "Thursday",
-        "occasion": "Gandhi Jayanti / Dusshera",
+        "date": "02-Oct-2026",
+        "day": "Friday",
+        "occasion": "Gandhi Jayanti",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H011",
-        "date": "20-Oct-2025",
-        "day": "Monday",
-        "occasion": "Diwali",
+        "date": "20-Oct-2026",
+        "day": "Tuesday",
+        "occasion": "Dusshera",
         "location": "Mumbai / Chennai"
     },
     {
         "id": "H012",
-        "date": "23-Oct-2025",
-        "day": "Thursday",
+        "date": "08-Nov-2026",
+        "day": "Sunday",
+        "occasion": "Diwali",
+        "location": "Mumbai / Chennai"
+    },
+    {
+        "id": "H013",
+        "date": "11-Nov-2026",
+        "day": "Wednesday",
         "occasion": "Bhai Dooj",
         "location": "Mumbai"
     },
     {
-        "id": "H013",
-        "date": "24-Dec-2025",
-        "day": "Wednesday",
+        "id": "H014",
+        "date": "24-Dec-2026",
+        "day": "Thursday",
         "occasion": "Christmas Eve",
         "location": "Mumbai / Chennai"
     },
     {
-        "id": "H014",
-        "date": "25-Dec-2025",
-        "day": "Thursday",
+        "id": "H015",
+        "date": "25-Dec-2026",
+        "day": "Friday",
         "occasion": "Christmas Day",
         "location": "Mumbai / Chennai"
     }
